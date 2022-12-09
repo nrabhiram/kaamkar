@@ -4,27 +4,33 @@ export class Project {
   title: string;
   description: string;
   date: Date;
-  item: Item;
+  items: Item[];
 
   constructor(title: string, description: string) {
     this.title = title;
     this.description = description;
     this.date = new Date();
-    this.item = {
-      title: 'First Item',
-      status: Status.INCOMPLETE
-    };
+    this.items = [];
   }
 
   progress(this: Project) {
-    if (this.item.status === Status.COMPLETED) {
-      return Utils.buildProgress(100);
+    let numCompletedItems = 0;
+    const numTotalItems = this.items.length;
+    let percentage: number;
+    if (!numTotalItems) {
+      percentage = 0;
     } else {
-      return Utils.buildProgress(0);
+      for (let i = 0; i < numTotalItems; i++) {
+        if (this.items[i]?.status === Status.COMPLETED) {
+          numCompletedItems++;
+        }
+      }
+      percentage = Math.round((numCompletedItems / numTotalItems) * 100);
     }
+    return Utils.buildProgress(percentage);
   }
 
   add(this: Project, item: Item) {
-    this.item = item;
+    this.items.push(item);
   }
 }

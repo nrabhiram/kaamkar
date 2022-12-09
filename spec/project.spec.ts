@@ -4,6 +4,7 @@ import { Item, Status } from '../src/utils';
 
 let project: Project;
 let item: Item;
+let completedItem: Item;
 
 describe('Project', () => {
   beforeEach(() => {
@@ -11,6 +12,10 @@ describe('Project', () => {
     item = {
       title: 'Test Item',
       status: Status.INCOMPLETE
+    };
+    completedItem = {
+      title: 'Complete Test Item',
+      status: Status.COMPLETED
     };
   });
 
@@ -26,12 +31,15 @@ describe('Project', () => {
   });
 
   it('A project with a single item that is completed has a progress of 100', () => {
-    const completedItem = {
-      title: 'Complete Test Item',
-      status: Status.COMPLETED
-    };
     project.add(completedItem);
     const progress = project.progress();
     expect(progress).toBe(100);
+  });
+
+  it('A project with 2 items but only 1 completed has a progress of 50', () => {
+    project.add(item);
+    project.add(completedItem);
+    const progress = project.progress();
+    expect(progress).toBe(50);
   });
 });
