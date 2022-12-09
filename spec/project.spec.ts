@@ -36,4 +36,11 @@ describe('Project', () => {
     const progress = project.progress();
     expect(progress).toBe(50);
   });
+
+  it('A project with 2 items that are both completed has a progress of 100', () => {
+    project.add(completedItem);
+    project.add(completedItem);
+    const progress = project.progress();
+    expect(progress).toBe(100);
+  });
 });
