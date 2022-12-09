@@ -1,3 +1,5 @@
+import { Item, Utils } from './utils';
+
 export class Project {
   title: string;
   description: string;
@@ -10,6 +12,10 @@ export class Project {
   }
 
   progress(this: Project) {
-    return 0;
+    return Utils.buildProgress(0);
+  }
+
+  add(this: Project, item: Item) {
+    return;
   }
 }
