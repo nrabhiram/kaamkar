@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { Project } from '../src/project';
-import { Item, Status } from '../src/utils';
+import { Item, Status, Utils } from '../src/utils';
 
 let project: Project;
 let item: Item;
@@ -9,14 +9,8 @@ let completedItem: Item;
 describe('Project', () => {
   beforeEach(() => {
     project = new Project('Test Project', 'This is a test project.');
-    item = {
-      title: 'Test Item',
-      status: Status.INCOMPLETE
-    };
-    completedItem = {
-      title: 'Complete Test Item',
-      status: Status.COMPLETED
-    };
+    item = Utils.buildItem('Test Item', Status.INCOMPLETE);
+    completedItem = Utils.buildItem('Complete Test Item', Status.COMPLETED);
   });
 
   it('A project with 0 items has a progress of 0', () => {
