@@ -24,6 +24,7 @@
   "author": "Abhiram Reddy",
   "license": "MIT",
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
     "css-loader": "^6.7.2",
