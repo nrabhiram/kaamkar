@@ -1,3 +1,408 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .animation-delay-2000 {
+      animation-delay: 2s;
+    }
+    .animation-delay-4000 {
+      animation-delay: 4s;
+    }
+}
+
+.mesh-gradient-container {
+    @apply relative z-[1];
+}
+
+.mesh-1 {
+    @apply fixed top-32 left-4 w-80 h-80 bg-violet-300 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob;
+}
+
+.mesh-2 {
+    @apply fixed top-80 left-12 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-2000;
+}
+
+.mesh-3 {
+    @apply fixed top-40 left-60 w-72 h-72 bg-teal-300 rounded-full mix-blend-multiply filter blur-2xl opacity-70 animate-blob animation-delay-4000;
+}
+
+.app {
+    @apply min-h-screen bg-dark-300 flex flex-col w-full;
+}
+
+.bg {
+    @apply h-full blur-3xl relative;
+}
+
+.nav {
+    @apply flex items-center justify-between flex-wrap p-6 z-[3];
+}
+
+.nav-title {
+    @apply flex items-center flex-shrink-0 text-light-100 mr-6 cursor-pointer;
+}
+
+.nav-logo {
+    @apply fill-current h-8 w-8 mr-2;
+}
+
+.nav-title {
+    @apply font-semibold text-xl tracking-tight;
+}
+
+.nav-toggle-container {
+    @apply block lg:hidden;
+}
+
+.nav-toggle-btn {
+    @apply flex items-center px-3 py-2 border rounded text-light-300 border-light-400 hover:text-light-100 hover:border-light-100;
+}
+
+.nav-toggle-icon {
+    @apply fill-current h-3 w-3;
+}
+
+.nav-sub-container {
+    @apply w-full block flex-grow lg:flex lg:items-center lg:w-auto;
+}
+
+.nav-links-container {
+    @apply text-sm lg:flex-grow;
+}
+
+.nav-link {
+    @apply transition ease-in-out block mt-4 lg:inline-block lg:mt-0 text-light-300 hover:text-light-100 mr-4 duration-300;
+}
+
+.nav-github-link {
+    @apply mt-4 lg:mt-0 transition ease-in-out flex w-min bg-dark-100 p-2 rounded-md font-medium text-gray-200 hover:text-white hover:bg-dark-50 hover:scale-110 duration-300;
+}
+
+.nav-github-logo {
+    @apply w-5 h-5 mr-2;
+}
+
+.app-body {
+    @apply lg:w-[56rem] w-full max-w-4xl mx-auto px-6 lg:px-0 relative z-[2];
+}
+
+.app-head {
+    @apply flex sm:flex-row flex-col sm:justify-between justify-center sm:items-center items-start;
+}
+
+.page-title {
+    @apply mb-4;
+}
+
+.page-heading {
+    @apply text-light-100 md:text-4xl text-3xl leading-tight font-semibold;
+}
+
+.page-description {
+    @apply text-light-400 text-sm;
+}
+
+.add-btn {
+    @apply transition ease-in-out text-light-300 bg-blue-500 hover:bg-blue-600 hover:scale-110 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2 duration-500;
+}
+
+.add-btn-icon {
+    @apply mr-2 -ml-1 w-6 h-6;
+}
+
+.project-container {
+    @apply flex flex-col justify-center items-center;
+}
+
+.project-card {
+    @apply transition ease-in-out block p-6 rounded-lg shadow-lg bg-dark-200 w-full my-2 cursor-pointer hover:bg-dark-50 duration-300;
+}
+
+.project-title {
+    @apply text-light-100 text-xl leading-tight font-medium mb-2;
+}
+
+.project-description {
+    @apply text-light-300 text-sm;
+}
+
+.progress-bar-container {
+    @apply flex items-center;
+}
+
+.progress-bar-empty {
+    @apply w-full bg-gray-500 h-1 rounded-full;
+}
+
+.progress-bar-full {
+    @apply bg-teal-500 h-1 rounded-full;
+}
+
+.progress-text {
+    @apply text-xs text-light-400 ml-4 font-bold;
+}
+
+.project-card-footer {
+    @apply flex flex-wrap items-center mt-4;
+}
+
+.project-date-created {
+    @apply text-gray-300 text-xs;
+}
+
+.project-options {
+    @apply flex items-center ml-auto;
+}
+
+.project-btn {
+    @apply transition ease-in-out hover:scale-110 duration-300 block;
+}
+
+.project-btn-icon {
+    @apply transition ease-in-out delay-150 w-5 stroke-gray-400 hover:stroke-gray-100 duration-300;
+}
+
+.footer {
+    @apply text-sm text-light-100 my-6 mx-auto text-center;
+}
+
+.footer-link {
+    @apply transition ease-in-out text-blue-300 hover:text-blue-400 duration-500;
+}
+
+.hero {
+    @apply flex flex-1 flex-col justify-center items-center z-[2] px-6 self-center;
+}
+
+.hero-title {
+    @apply lg:text-6xl sm:text-4xl text-2xl text-light-100 font-bold;
+}
+
+.hero-description {
+    @apply text-light-300 sm:text-base text-[14px] sm:mt-4 mt-2 text-center;
+}
+
+.hero-btn-container {
+    @apply flex flex-row flex-wrap items-start justify-center mt-4;
+}
+
+.hero-add-btn {
+    @apply transition ease-in-out text-light-300 bg-blue-500 hover:bg-blue-600 hover:scale-110 font-medium rounded-lg text-sm px-3 py-2.5 inline-flex items-center mr-2 sm:mb-0 mb-2 duration-500;
+}
+
+.hero-bmc-btn {
+    @apply transition ease-in-out hover:scale-110 sm:ml-2 ml-0 duration-500;
+}
+
+.hero-bmc-btn-content {
+    @apply h-[40px] w-[144px];
+}
+
+.items-grid-container {
+    @apply w-full overflow-x-auto pb-2;
+}
+
+.items-grid {
+    @apply flex justify-between w-[56rem];
+}
+
+.items-list-container {
+    @apply w-[260px];
+}
+
+.items-list-title-container {
+    @apply flex items-center;
+}
+
+.items-list-to-do-icon {
+    @apply stroke-gray-300 w-5 h-5 mr-2;
+}
+
+.items-list-to-do-title {
+    @apply text-gray-300 block;
+}
+
+.items-list-progress-icon {
+    @apply stroke-blue-400 w-5 h-5 mr-2;
+}
+
+.items-list-progress-title {
+    @apply text-blue-400 block;
+}
+
+.items-list-completed-icon {
+    @apply stroke-green-400 w-5 h-5 mr-2;
+}
+
+.items-list-completed-title {
+    @apply text-green-400 block;
+}
+
+.item-card {
+    @apply transition ease-in-out block p-6 rounded-lg shadow-lg bg-dark-200 w-full my-2 cursor-pointer hover:bg-dark-50 duration-300;
+}
+
+.item-title {
+    @apply text-light-100 text-base leading-tight font-medium mb-2;
+}
+
+.item-description {
+    @apply text-light-300 text-sm;
+}
+
+.item-card-footer {
+    @apply mt-4;
+}
+
+.item-date-created {
+    @apply text-gray-300 text-xs;
+}
+
+.item-options {
+    @apply flex items-center mt-2 justify-end;
+}
+
+.item-btn {
+    @apply transition ease-in-out hover:scale-110 duration-300 block;
+}
+
+.item-icon {
+    @apply transition ease-in-out delay-150 w-5 stroke-gray-400 hover:stroke-gray-100 duration-300;
+}
+
+.read-btn {
+    @apply transition inline-flex items-center text-light-300 hover:text-light-100 duration-300 mt-2;
+}
+
+.read-btn-icon {
+    @apply transition w-4 h-4 group-hover:rotate-180 duration-300 mr-1;
+}
+
+.read-btn-text {
+    @apply text-sm;
+}
+
+.form-modal-bg {
+    @apply fixed inset-0 bg-gray-300 bg-opacity-30 transition-opacity;
+}
+
+.modal-container {
+    @apply fixed inset-0 z-10 overflow-y-auto;
+}
+
+.form-container {
+    @apply flex min-h-full justify-center p-4 text-center items-center sm:p-0;
+}
+
+.form-border {
+    @apply relative transform overflow-hidden rounded-lg bg-dark-300 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg;
+}
+
+.form-content {
+    @apply bg-dark-300 px-4 pt-5 pb-4 sm:p-6 sm:pb-4;
+}
+
+.form-title {
+    @apply text-lg font-medium leading-6 text-light-100;
+}
+
+.form-label {
+    @apply block text-sm font-medium text-light-300;
+}
+
+.form-input {
+    @apply bg-dark-300 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm text-light-300;
+}
+
+.form-input-description {
+    @apply text-sm text-light-400;
+}
+
+.form-category-selector {
+    @apply transition flex justify-center items-center rounded-md border border-gray-300 bg-dark-200 px-4 py-2 text-sm font-medium text-light-400 shadow-sm hover:bg-dark-300 duration-200;
+}
+
+.form-category-options {
+    @apply z-10 bg-dark-200 mt-2 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none;
+}
+
+.form-category-option-container {
+    @apply flex items-center px-4 py-2 cursor-pointer;
+}
+
+.form-category-to-do-option-icon {
+    @apply transition stroke-gray-300 w-5 h-5 mr-2 group-hover:stroke-gray-400 duration-300;
+}
+
+.form-category-to-do-option-title {
+    @apply transition text-gray-300 block group-hover:text-gray-400 duration-300;
+}
+
+.form-category-progress-option-icon {
+    @apply transition stroke-blue-400 w-5 h-5 mr-2 group-hover:stroke-blue-500 duration-300;
+}
+
+.form-category-progress-option-title {
+    @apply transition text-blue-400 block group-hover:text-blue-500 duration-300;
+}
+
+.form-category-completed-option-icon {
+    @apply transition stroke-green-400 w-5 h-5 mr-2 group-hover:stroke-green-500 duration-300;
+}
+
+.form-category-completed-option-title {
+    @apply transition text-green-400 block group-hover:text-green-500 duration-300;
+}
+
+.msg-modal-bg {
+    @apply fixed inset-0 bg-gray-300 bg-opacity-30 transition-opacity;
+}
+
+.msg-container {
+    @apply flex min-h-full justify-center p-4 text-center items-center sm:p-0;
+}
+
+.msg-border {
+    @apply relative transform overflow-hidden rounded-lg bg-dark-300 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg;
+}
+
+.msg-content {
+    @apply bg-dark-300 px-4 pt-5 pb-4 sm:p-6 sm:pb-4;
+}
+
+.msg-text-content-container {
+    @apply sm:flex sm:items-start;
+}
+
+.msg-icon-container {
+    @apply mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10;
+}
+
+.msg-icon {
+    @apply h-6 w-6 text-red-600;
+}
+
+.msg-text {
+    @apply mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left;
+}
+
+.msg-title {
+    @apply text-lg font-medium leading-6 text-light-100;
+}
+
+.msg-description {
+    @apply text-sm text-light-400;
+}
+
+.msg-btn-container {
+    @apply px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6;
+}
+
+.msg-delete-btn {
+    @apply inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm;
+}
+
+.msg-cancel-btn {
+    @apply mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm;
+}
