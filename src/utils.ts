@@ -15,7 +15,12 @@ export class Utils {
       status: status
     };
   }
+
   static buildProgress(progress: number) {
     return progress;
+  }
+
+  static buildItemsList(list: Item[]) {
+    return list;
   }
 }

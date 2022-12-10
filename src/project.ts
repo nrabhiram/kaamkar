@@ -10,7 +10,7 @@ export class Project {
     this.title = title;
     this.description = description;
     this.date = new Date();
-    this.items = [];
+    this.items = Utils.buildItemsList([]);
   }
 
   progress(this: Project) {
@@ -34,7 +34,8 @@ export class Project {
     this.items.push(item);
   }
 
-  toDoItems(): Item[] {
-    return [];
+  toDoItems() {
+    const toDoItems: Item[] = [];
+    return Utils.buildItemsList(toDoItems);
   }
 }
