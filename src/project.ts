@@ -10,7 +10,7 @@ export class Project {
     this.title = title;
     this.description = description;
     this.date = new Date();
-    this.items = [];
+    this.items = Utils.buildItemsList([]);
   }
 
   progress(this: Project) {
@@ -21,7 +21,7 @@ export class Project {
       percentage = 0;
     } else {
       for (let i = 0; i < numTotalItems; i++) {
-        if (this.items[i]?.status === Status.COMPLETED) {
+        if (this.items[i]?.status === Utils.buildStatus(Status.COMPLETED)) {
           numCompletedItems++;
         }
       }
@@ -32,5 +32,27 @@ export class Project {
 
   add(this: Project, item: Item) {
     this.items.push(item);
+  }
+
+  toDoItems() {
+    return this.itemsOfStatus(Utils.buildStatus(Status.TODO));
+  }
+
+  progressItems() {
+    return this.itemsOfStatus(Utils.buildStatus(Status.PROGRESS));
+  }
+
+  completeItems() {
+    return this.itemsOfStatus(Utils.buildStatus(Status.COMPLETED));
+  }
+
+  private itemsOfStatus(status: Status) {
+    const items: Item[] = [];
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i]?.status === status) {
+        items.push(this.items[i]);
+      }
+    }
+    return Utils.buildItemsList(items);
   }
 }
