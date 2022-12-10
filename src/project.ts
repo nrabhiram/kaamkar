@@ -35,7 +35,12 @@ export class Project {
   }
 
   toDoItems() {
-    const toDoItems = this.items;
+    const toDoItems: Item[] = [];
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i]?.status === Status.INCOMPLETE) {
+        toDoItems.push(this.items[i]);
+      }
+    }
     return Utils.buildItemsList(toDoItems);
   }
 }

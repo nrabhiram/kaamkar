@@ -89,7 +89,26 @@ describe('Project', () => {
     it('A project with a single item that is yet to be started has the item listed as the only to-do item', () => {
       project.add(toDoItem);
       const toDoItems = project.toDoItems();
-      expect(toDoItems).toEqual([toDoItem]);
+      expect(toDoItems).toEqual([
+        Utils.buildItem('Test Item', Status.INCOMPLETE)
+      ]);
+    });
+
+    it('A project with 3 items, the first 2 yet to be started, and the last 1 completed, has only the first 2 listed as to do items', () => {
+      const toDoItem1 = Utils.buildItem('Test Item 1', Status.INCOMPLETE);
+      const toDoItem2 = Utils.buildItem('Test Item 2', Status.INCOMPLETE);
+      const completedItem = Utils.buildItem(
+        'Complete Test Item',
+        Status.COMPLETED
+      );
+      project.add(toDoItem1);
+      project.add(toDoItem2);
+      project.add(completedItem);
+      const toDoItems = project.toDoItems();
+      expect(toDoItems).toEqual([
+        Utils.buildItem('Test Item 1', Status.INCOMPLETE),
+        Utils.buildItem('Test Item 2', Status.INCOMPLETE)
+      ]);
     });
   });
 });
