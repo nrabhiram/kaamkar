@@ -97,10 +97,6 @@ describe('Project', () => {
     it('A project with 3 items, the first 2 yet to be started, and the last 1 completed, has only the first 2 listed as to do items', () => {
       const toDoItem1 = Utils.buildItem('Test Item 1', Status.INCOMPLETE);
       const toDoItem2 = Utils.buildItem('Test Item 2', Status.INCOMPLETE);
-      const completedItem = Utils.buildItem(
-        'Complete Test Item',
-        Status.COMPLETED
-      );
       project.add(toDoItem1);
       project.add(toDoItem2);
       project.add(completedItem);
@@ -109,6 +105,70 @@ describe('Project', () => {
         Utils.buildItemsList([
           Utils.buildItem('Test Item 1', Status.INCOMPLETE),
           Utils.buildItem('Test Item 2', Status.INCOMPLETE)
+        ])
+      );
+    });
+
+    it('A project with 0 items has a list of 0 progress items', () => {
+      const progressItems = project.progressItems();
+      expect(progressItems).toEqual(Utils.buildItemsList([]));
+    });
+
+    it('A project with a single item that is in progress has the item listed as the only progress item', () => {
+      project.add(inProgressItem);
+      const progressItems = project.progressItems();
+      expect(progressItems).toEqual(
+        Utils.buildItemsList([Utils.buildItem('Test Item', Status.INCOMPLETE)])
+      );
+    });
+
+    it('A project with 3 items, the first 2 in progress, and the last 1 completed, has only the first 2 listed as progress items', () => {
+      const progressItem1 = Utils.buildItem('Test Item 1', Status.INCOMPLETE);
+      const progressItem2 = Utils.buildItem('Test Item 2', Status.INCOMPLETE);
+      project.add(progressItem1);
+      project.add(progressItem2);
+      project.add(completedItem);
+      const progressItems = project.progressItems();
+      expect(progressItems).toEqual(
+        Utils.buildItemsList([
+          Utils.buildItem('Test Item 1', Status.INCOMPLETE),
+          Utils.buildItem('Test Item 2', Status.INCOMPLETE)
+        ])
+      );
+    });
+
+    it('A project with 0 items has a list of 0 completed items', () => {
+      const completeItems = project.completeItems();
+      expect(completeItems).toEqual(Utils.buildItemsList([]));
+    });
+
+    it('A project with a single item that is completed has the item listed as the only completed item', () => {
+      project.add(completedItem);
+      const completeItems = project.completeItems();
+      expect(completeItems).toEqual(
+        Utils.buildItemsList([
+          Utils.buildItem('Complete Test Item', Status.COMPLETED)
+        ])
+      );
+    });
+
+    it('A project with 3 items, the first 2 completed, and the last 1 to do, has only the first 2 listed as completed items', () => {
+      const completedItem1 = Utils.buildItem(
+        'Complete Test Item 1',
+        Status.COMPLETED
+      );
+      const completedItem2 = Utils.buildItem(
+        'Complete Test Item 2',
+        Status.COMPLETED
+      );
+      project.add(completedItem1);
+      project.add(completedItem2);
+      project.add(toDoItem);
+      const completeItems = project.completeItems();
+      expect(completeItems).toEqual(
+        Utils.buildItemsList([
+          Utils.buildItem('Complete Test Item 1', Status.COMPLETED),
+          Utils.buildItem('Complete Test Item 2', Status.COMPLETED)
         ])
       );
     });

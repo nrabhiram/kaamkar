@@ -35,12 +35,24 @@ export class Project {
   }
 
   toDoItems() {
-    const toDoItems: Item[] = [];
+    return this.itemsOfStatus(Status.INCOMPLETE);
+  }
+
+  progressItems() {
+    return this.itemsOfStatus(Status.INCOMPLETE);
+  }
+
+  completeItems() {
+    return this.itemsOfStatus(Status.COMPLETED);
+  }
+
+  private itemsOfStatus(status: Status) {
+    const items: Item[] = [];
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i]?.status === Status.INCOMPLETE) {
-        toDoItems.push(this.items[i]);
+      if (this.items[i]?.status === status) {
+        items.push(this.items[i]);
       }
     }
-    return Utils.buildItemsList(toDoItems);
+    return Utils.buildItemsList(items);
   }
 }
