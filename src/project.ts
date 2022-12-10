@@ -35,7 +35,7 @@ export class Project {
   }
 
   toDoItems() {
-    const toDoItems: Item[] = [];
+    const toDoItems = this.items;
     return Utils.buildItemsList(toDoItems);
   }
 }

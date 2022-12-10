@@ -85,5 +85,11 @@ describe('Project', () => {
       const toDoItems = project.toDoItems();
       expect(toDoItems).toEqual([]);
     });
+
+    it('A project with a single item that is yet to be started has the item listed as the only to-do item', () => {
+      project.add(toDoItem);
+      const toDoItems = project.toDoItems();
+      expect(toDoItems).toEqual([toDoItem]);
+    });
   });
 });
