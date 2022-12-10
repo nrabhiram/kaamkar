@@ -10,9 +10,15 @@ let completedItem: Item;
 describe('Project', () => {
   beforeEach(() => {
     project = new Project('Test Project', 'This is a test project.');
-    toDoItem = Utils.buildItem('Test Item', Status.INCOMPLETE);
-    inProgressItem = Utils.buildItem('Test Item', Status.INCOMPLETE);
-    completedItem = Utils.buildItem('Complete Test Item', Status.COMPLETED);
+    toDoItem = Utils.buildItem('Test Item', Utils.buildStatus(Status.TODO));
+    inProgressItem = Utils.buildItem(
+      'Test Item',
+      Utils.buildStatus(Status.PROGRESS)
+    );
+    completedItem = Utils.buildItem(
+      'Complete Test Item',
+      Utils.buildStatus(Status.COMPLETED)
+    );
   });
 
   describe('Project Progress', () => {
@@ -90,21 +96,29 @@ describe('Project', () => {
       project.add(toDoItem);
       const toDoItems = project.toDoItems();
       expect(toDoItems).toEqual(
-        Utils.buildItemsList([Utils.buildItem('Test Item', Status.INCOMPLETE)])
+        Utils.buildItemsList([
+          Utils.buildItem('Test Item', Utils.buildStatus(Status.TODO))
+        ])
       );
     });
 
     it('A project with 3 items, the first 2 yet to be started, and the last 1 completed, has only the first 2 listed as to do items', () => {
-      const toDoItem1 = Utils.buildItem('Test Item 1', Status.INCOMPLETE);
-      const toDoItem2 = Utils.buildItem('Test Item 2', Status.INCOMPLETE);
+      const toDoItem1 = Utils.buildItem(
+        'Test Item 1',
+        Utils.buildStatus(Status.TODO)
+      );
+      const toDoItem2 = Utils.buildItem(
+        'Test Item 2',
+        Utils.buildStatus(Status.TODO)
+      );
       project.add(toDoItem1);
       project.add(toDoItem2);
       project.add(completedItem);
       const toDoItems = project.toDoItems();
       expect(toDoItems).toEqual(
         Utils.buildItemsList([
-          Utils.buildItem('Test Item 1', Status.INCOMPLETE),
-          Utils.buildItem('Test Item 2', Status.INCOMPLETE)
+          Utils.buildItem('Test Item 1', Utils.buildStatus(Status.TODO)),
+          Utils.buildItem('Test Item 2', Utils.buildStatus(Status.TODO))
         ])
       );
     });
@@ -118,21 +132,29 @@ describe('Project', () => {
       project.add(inProgressItem);
       const progressItems = project.progressItems();
       expect(progressItems).toEqual(
-        Utils.buildItemsList([Utils.buildItem('Test Item', Status.INCOMPLETE)])
+        Utils.buildItemsList([
+          Utils.buildItem('Test Item', Utils.buildStatus(Status.PROGRESS))
+        ])
       );
     });
 
     it('A project with 3 items, the first 2 in progress, and the last 1 completed, has only the first 2 listed as progress items', () => {
-      const progressItem1 = Utils.buildItem('Test Item 1', Status.INCOMPLETE);
-      const progressItem2 = Utils.buildItem('Test Item 2', Status.INCOMPLETE);
+      const progressItem1 = Utils.buildItem(
+        'Test Item 1',
+        Utils.buildStatus(Status.PROGRESS)
+      );
+      const progressItem2 = Utils.buildItem(
+        'Test Item 2',
+        Utils.buildStatus(Status.PROGRESS)
+      );
       project.add(progressItem1);
       project.add(progressItem2);
       project.add(completedItem);
       const progressItems = project.progressItems();
       expect(progressItems).toEqual(
         Utils.buildItemsList([
-          Utils.buildItem('Test Item 1', Status.INCOMPLETE),
-          Utils.buildItem('Test Item 2', Status.INCOMPLETE)
+          Utils.buildItem('Test Item 1', Utils.buildStatus(Status.PROGRESS)),
+          Utils.buildItem('Test Item 2', Utils.buildStatus(Status.PROGRESS))
         ])
       );
     });
@@ -147,7 +169,10 @@ describe('Project', () => {
       const completeItems = project.completeItems();
       expect(completeItems).toEqual(
         Utils.buildItemsList([
-          Utils.buildItem('Complete Test Item', Status.COMPLETED)
+          Utils.buildItem(
+            'Complete Test Item',
+            Utils.buildStatus(Status.COMPLETED)
+          )
         ])
       );
     });
@@ -155,11 +180,11 @@ describe('Project', () => {
     it('A project with 3 items, the first 2 completed, and the last 1 to do, has only the first 2 listed as completed items', () => {
       const completedItem1 = Utils.buildItem(
         'Complete Test Item 1',
-        Status.COMPLETED
+        Utils.buildStatus(Status.COMPLETED)
       );
       const completedItem2 = Utils.buildItem(
         'Complete Test Item 2',
-        Status.COMPLETED
+        Utils.buildStatus(Status.COMPLETED)
       );
       project.add(completedItem1);
       project.add(completedItem2);
@@ -167,8 +192,33 @@ describe('Project', () => {
       const completeItems = project.completeItems();
       expect(completeItems).toEqual(
         Utils.buildItemsList([
-          Utils.buildItem('Complete Test Item 1', Status.COMPLETED),
-          Utils.buildItem('Complete Test Item 2', Status.COMPLETED)
+          Utils.buildItem(
+            'Complete Test Item 1',
+            Utils.buildStatus(Status.COMPLETED)
+          ),
+          Utils.buildItem(
+            'Complete Test Item 2',
+            Utils.buildStatus(Status.COMPLETED)
+          )
+        ])
+      );
+    });
+
+    it('A project with 2 items, 1st yet to start, and 2nd in progress, has only the 2nd one listed as a progress item', () => {
+      const toDoItem = Utils.buildItem(
+        'To-Do Item',
+        Utils.buildStatus(Status.TODO)
+      );
+      const inProgressItem = Utils.buildItem(
+        'Progress Item',
+        Utils.buildStatus(Status.PROGRESS)
+      );
+      project.add(toDoItem);
+      project.add(inProgressItem);
+      const progressItems = project.progressItems();
+      expect(progressItems).toEqual(
+        Utils.buildItemsList([
+          Utils.buildItem('Progress Item', Utils.buildStatus(Status.PROGRESS))
         ])
       );
     });

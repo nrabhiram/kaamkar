@@ -21,7 +21,7 @@ export class Project {
       percentage = 0;
     } else {
       for (let i = 0; i < numTotalItems; i++) {
-        if (this.items[i]?.status === Status.COMPLETED) {
+        if (this.items[i]?.status === Utils.buildStatus(Status.COMPLETED)) {
           numCompletedItems++;
         }
       }
@@ -35,15 +35,15 @@ export class Project {
   }
 
   toDoItems() {
-    return this.itemsOfStatus(Status.INCOMPLETE);
+    return this.itemsOfStatus(Utils.buildStatus(Status.TODO));
   }
 
   progressItems() {
-    return this.itemsOfStatus(Status.INCOMPLETE);
+    return this.itemsOfStatus(Utils.buildStatus(Status.PROGRESS));
   }
 
   completeItems() {
-    return this.itemsOfStatus(Status.COMPLETED);
+    return this.itemsOfStatus(Utils.buildStatus(Status.COMPLETED));
   }
 
   private itemsOfStatus(status: Status) {
