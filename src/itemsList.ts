@@ -36,8 +36,15 @@ export class ItemsList {
 
   delete(item: Item) {
     const items: Item[] = [];
-    if (this.items.length >= 2) {
-      items.push(this.items[this.items.length - 1]);
+    for (let i = 0; i < this.items.length; i++) {
+      if (
+        !(
+          item.title === this.items[i].title &&
+          item.status === this.items[i].status
+        )
+      ) {
+        items.push(this.items[i]);
+      }
     }
     return new ItemsList(items);
   }

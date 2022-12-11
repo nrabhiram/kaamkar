@@ -319,5 +319,37 @@ describe('Project', () => {
         ])
       );
     });
+
+    it('A project with 3 items, has only 1st and 3rd items left after deleting the 2nd one', () => {
+      const testItem1 = Utils.buildItem(
+        Utils.buildTitle('Test Item 1'),
+        Utils.buildStatus(Status.TODO)
+      );
+      const testItem2 = Utils.buildItem(
+        Utils.buildTitle('Test Item 2'),
+        Utils.buildStatus(Status.TODO)
+      );
+      const testItem3 = Utils.buildItem(
+        Utils.buildTitle('Test Item 3'),
+        Utils.buildStatus(Status.TODO)
+      );
+      project.add(testItem1);
+      project.add(testItem2);
+      project.add(testItem3);
+      const updatedProject = project.delete(testItem2);
+      const items = updatedProject.items;
+      expect(items).toEqual(
+        new ItemsList([
+          Utils.buildItem(
+            Utils.buildTitle('Test Item 1'),
+            Utils.buildStatus(Status.TODO)
+          ),
+          Utils.buildItem(
+            Utils.buildTitle('Test Item 3'),
+            Utils.buildStatus(Status.TODO)
+          )
+        ])
+      );
+    });
   });
 });
