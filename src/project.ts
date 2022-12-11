@@ -33,10 +33,11 @@ export class Project {
   }
 
   delete(this: Project, item: Item) {
+    const items = this.items.delete(item);
     return new Project(
       Utils.buildTitle(this.title),
       Utils.buildDescription(this.description),
-      new ItemsList([])
+      items
     );
   }
 

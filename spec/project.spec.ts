@@ -296,5 +296,28 @@ describe('Project', () => {
       const items = updatedProject.items;
       expect(items).toEqual(new ItemsList([]));
     });
+
+    it('A project with 2 items has only the 2nd item left after deleting the 1st item', () => {
+      const testItem1 = Utils.buildItem(
+        Utils.buildTitle('Test Item 1'),
+        Utils.buildStatus(Status.TODO)
+      );
+      const testItem2 = Utils.buildItem(
+        Utils.buildTitle('Test Item 2'),
+        Utils.buildStatus(Status.TODO)
+      );
+      project.add(testItem1);
+      project.add(testItem2);
+      const updatedProject = project.delete(testItem1);
+      const items = updatedProject.items;
+      expect(items).toEqual(
+        new ItemsList([
+          Utils.buildItem(
+            Utils.buildTitle('Test Item 2'),
+            Utils.buildStatus(Status.TODO)
+          )
+        ])
+      );
+    });
   });
 });

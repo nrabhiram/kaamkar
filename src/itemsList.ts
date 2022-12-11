@@ -33,4 +33,12 @@ export class ItemsList {
     this.items.push(item);
     return new ItemsList(this.items);
   }
+
+  delete(item: Item) {
+    const items: Item[] = [];
+    if (this.items.length >= 2) {
+      items.push(this.items[this.items.length - 1]);
+    }
+    return new ItemsList(items);
+  }
 }
