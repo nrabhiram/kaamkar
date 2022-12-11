@@ -1,17 +1,19 @@
 import { ItemsList } from './itemsList';
-import { Item, Utils } from './utils';
+import { Item, Status, Utils } from './utils';
 
 export class Project {
   title: string;
   description: string;
   date: Date;
   items: ItemsList;
+  private _createdItems: number;
 
   constructor(title: string, description: string, items: ItemsList) {
     this.title = title;
     this.description = description;
     this.date = new Date();
     this.items = items;
+    this._createdItems = 0;
   }
 
   progress(this: Project) {
@@ -28,17 +30,17 @@ export class Project {
     return Utils.buildProgress(percentage);
   }
 
-  add(this: Project, item: Item) {
-    this.items = this.items.add(item);
+  add(this: Project, title: string, status: Status) {
+    this.items = this.items.add(
+      Utils.buildTitle(title),
+      Utils.buildStatus(status),
+      this._createdItems
+    );
+    this._createdItems++;
   }
 
   delete(this: Project, item: Item) {
-    const items = this.items.delete(item);
-    return new Project(
-      Utils.buildTitle(this.title),
-      Utils.buildDescription(this.description),
-      items
-    );
+    this.items = this.items.delete(item);
   }
 
   toDoItems() {

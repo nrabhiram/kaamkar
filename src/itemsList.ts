@@ -3,8 +3,12 @@ import { Item, Status, Utils } from './utils';
 export class ItemsList {
   items: Item[] = [];
 
-  constructor(items: Item[]) {
-    this.items = items;
+  constructor(items?: Item[]) {
+    if (items) {
+      this.items = items;
+    } else {
+      this.items = [];
+    }
   }
 
   private itemsOfStatus(status: Status) {
@@ -29,20 +33,20 @@ export class ItemsList {
     return this.itemsOfStatus(Utils.buildStatus(Status.COMPLETED));
   }
 
-  add(item: Item) {
-    this.items.push(item);
+  add(title: string, status: Status, id: number) {
+    const newItem = Utils.buildItem(
+      Utils.buildTitle(title),
+      Utils.buildStatus(status),
+      id
+    );
+    this.items.push(newItem);
     return new ItemsList(this.items);
   }
 
   delete(item: Item) {
     const items: Item[] = [];
     for (let i = 0; i < this.items.length; i++) {
-      if (
-        !(
-          item.title === this.items[i].title &&
-          item.status === this.items[i].status
-        )
-      ) {
+      if (item.id !== this.items[i].id) {
         items.push(this.items[i]);
       }
     }
