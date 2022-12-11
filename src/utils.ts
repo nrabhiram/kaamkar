@@ -12,7 +12,7 @@ export interface Item {
 export class Utils {
   static buildItem(title: string, status: Status) {
     return {
-      title: title,
+      title: this.buildTitle(title),
       status: this.buildStatus(status)
     };
   }
@@ -21,11 +21,15 @@ export class Utils {
     return progress;
   }
 
-  static buildItemsList(list: Item[]) {
-    return list;
-  }
-
   static buildStatus(status: Status) {
     return status;
+  }
+
+  static buildTitle(title: string) {
+    return title;
+  }
+
+  static buildDescription(description: string) {
+    return description;
   }
 }

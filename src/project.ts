@@ -1,58 +1,46 @@
-import { Item, Status, Utils } from './utils';
+import { ItemsList } from './itemsList';
+import { Item, Utils } from './utils';
 
 export class Project {
   title: string;
   description: string;
   date: Date;
-  items: Item[];
+  items: ItemsList;
 
   constructor(title: string, description: string) {
     this.title = title;
     this.description = description;
     this.date = new Date();
-    this.items = Utils.buildItemsList([]);
+    this.items = new ItemsList([]);
   }
 
   progress(this: Project) {
-    let numCompletedItems = 0;
-    const numTotalItems = this.items.length;
+    const completeItems = this.items.completeItems();
+    const numCompleteItems = completeItems.items.length;
+    const numTotalItems = this.items.items.length;
     let percentage: number;
+
     if (!numTotalItems) {
       percentage = 0;
     } else {
-      for (let i = 0; i < numTotalItems; i++) {
-        if (this.items[i]?.status === Utils.buildStatus(Status.COMPLETED)) {
-          numCompletedItems++;
-        }
-      }
-      percentage = Math.round((numCompletedItems / numTotalItems) * 100);
+      percentage = Math.round((numCompleteItems / numTotalItems) * 100);
     }
     return Utils.buildProgress(percentage);
   }
 
   add(this: Project, item: Item) {
-    this.items.push(item);
+    this.items = this.items.add(item);
   }
 
   toDoItems() {
-    return this.itemsOfStatus(Utils.buildStatus(Status.TODO));
+    return this.items.toDoItems();
   }
 
   progressItems() {
-    return this.itemsOfStatus(Utils.buildStatus(Status.PROGRESS));
+    return this.items.progressItems();
   }
 
   completeItems() {
-    return this.itemsOfStatus(Utils.buildStatus(Status.COMPLETED));
-  }
-
-  private itemsOfStatus(status: Status) {
-    const items: Item[] = [];
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i]?.status === status) {
-        items.push(this.items[i]);
-      }
-    }
-    return Utils.buildItemsList(items);
+    return this.items.completeItems();
   }
 }
