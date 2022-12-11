@@ -1,15 +1,16 @@
 import { ItemsList } from './itemsList';
+import { Title } from './title';
 import { Item, Status, Utils } from './utils';
 
 export class Project {
-  title: string;
+  title: Title;
   description: string;
   date: Date;
   items: ItemsList;
   private _createdItems: number;
 
   constructor(title: string, description: string, items: ItemsList) {
-    this.title = title;
+    this.title = new Title(title);
     this.description = description;
     this.date = new Date();
     this.items = items;
@@ -44,7 +45,7 @@ export class Project {
   }
 
   update(title: string, description: string) {
-    this.title = 'Untitled Project';
+    this.title = this.title.update(title);
     this.description = description;
   }
 

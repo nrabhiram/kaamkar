@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { ItemsList } from '../src/itemsList';
 import { Project } from '../src/project';
+import { Title } from '../src/title';
 import { Status, Utils } from '../src/utils';
 
 let project: Project;
@@ -434,7 +435,7 @@ describe('Project', () => {
         Utils.buildTitle(''),
         Utils.buildDescription('This is a project description')
       );
-      expect(project.title).toEqual('Untitled Project');
+      expect(project.title).toEqual(new Title('Untitled Project'));
     });
   });
 });
