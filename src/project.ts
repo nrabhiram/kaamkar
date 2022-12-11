@@ -9,8 +9,8 @@ export class Project {
   items: ItemsList;
   private _createdItems: number;
 
-  constructor(title: string, description: string, items: ItemsList) {
-    this.title = new Title(title);
+  constructor(title: Title, description: string, items: ItemsList) {
+    this.title = title;
     this.description = description;
     this.date = new Date();
     this.items = items;
@@ -44,7 +44,7 @@ export class Project {
     this.items = this.items.delete(item);
   }
 
-  update(title: string, description: string) {
+  update(title: Title, description: string) {
     this.title = this.title.update(title);
     this.description = description;
   }

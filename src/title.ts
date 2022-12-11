@@ -9,7 +9,7 @@ export class Title {
     }
   }
 
-  update(title: string) {
-    return new Title(title);
+  update(title: Title) {
+    return new Title(title.text);
   }
 }

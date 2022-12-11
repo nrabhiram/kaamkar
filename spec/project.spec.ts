@@ -9,7 +9,7 @@ let project: Project;
 describe('Project', () => {
   beforeEach(() => {
     project = new Project(
-      Utils.buildTitle('Test Project'),
+      new Title('Test Project'),
       Utils.buildDescription('This is a test project.'),
       new ItemsList()
     );
@@ -432,10 +432,18 @@ describe('Project', () => {
   describe('Project Edit', () => {
     it('A project title is updated to “Untitled Project” when edited to a blank', () => {
       project.update(
-        Utils.buildTitle(''),
+        new Title(''),
         Utils.buildDescription('This is a project description')
       );
       expect(project.title).toEqual(new Title('Untitled Project'));
+    });
+
+    it('A project title is updated to the edited value if it is not a blank', () => {
+      project.update(
+        new Title('Test Title'),
+        Utils.buildDescription('This is a project description')
+      );
+      expect(project.title.text).toBe('Test Title');
     });
   });
 });
