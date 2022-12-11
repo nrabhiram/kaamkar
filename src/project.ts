@@ -7,11 +7,11 @@ export class Project {
   date: Date;
   items: ItemsList;
 
-  constructor(title: string, description: string) {
+  constructor(title: string, description: string, items: ItemsList) {
     this.title = title;
     this.description = description;
     this.date = new Date();
-    this.items = new ItemsList([]);
+    this.items = items;
   }
 
   progress(this: Project) {
@@ -30,6 +30,14 @@ export class Project {
 
   add(this: Project, item: Item) {
     this.items = this.items.add(item);
+  }
+
+  delete(this: Project, item: Item) {
+    return new Project(
+      Utils.buildTitle(this.title),
+      Utils.buildDescription(this.description),
+      new ItemsList([])
+    );
   }
 
   toDoItems() {

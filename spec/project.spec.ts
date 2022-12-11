@@ -12,7 +12,8 @@ describe('Project', () => {
   beforeEach(() => {
     project = new Project(
       Utils.buildTitle('Test Project'),
-      Utils.buildDescription('This is a test project.')
+      Utils.buildDescription('This is a test project.'),
+      new ItemsList([])
     );
     toDoItem = Utils.buildItem(
       Utils.buildTitle('Test Item'),
@@ -285,6 +286,15 @@ describe('Project', () => {
           )
         ])
       );
+    });
+  });
+
+  describe('Project Item Delete', () => {
+    it('A project with 1 item has 0 items left upon deletion', () => {
+      project.add(toDoItem);
+      const updatedProject = project.delete(toDoItem);
+      const items = updatedProject.items;
+      expect(items).toEqual(new ItemsList([]));
     });
   });
 });
