@@ -427,4 +427,14 @@ describe('Project', () => {
       );
     });
   });
+
+  describe('Project Edit', () => {
+    it('A project title is updated to “Untitled Project” when edited to a blank', () => {
+      project.update(
+        Utils.buildTitle(''),
+        Utils.buildDescription('This is a project description')
+      );
+      expect(project.title).toEqual('Untitled Project');
+    });
+  });
 });

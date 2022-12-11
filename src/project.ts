@@ -43,6 +43,11 @@ export class Project {
     this.items = this.items.delete(item);
   }
 
+  update(title: string, description: string) {
+    this.title = 'Untitled Project';
+    this.description = description;
+  }
+
   toDoItems() {
     return this.items.toDoItems();
   }
