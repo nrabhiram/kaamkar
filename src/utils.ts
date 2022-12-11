@@ -7,13 +7,15 @@ export enum Status {
 export interface Item {
   title: string;
   status: Status;
+  id: number;
 }
 
 export class Utils {
-  static buildItem(title: string, status: Status) {
+  static buildItem(title: string, status: Status, id: number): Item {
     return {
-      title: title,
-      status: this.buildStatus(status)
+      title: this.buildTitle(title),
+      status: this.buildStatus(status),
+      id: id
     };
   }
 
@@ -21,11 +23,15 @@ export class Utils {
     return progress;
   }
 
-  static buildItemsList(list: Item[]) {
-    return list;
-  }
-
   static buildStatus(status: Status) {
     return status;
+  }
+
+  static buildTitle(title: string) {
+    return title;
+  }
+
+  static buildDescription(description: string) {
+    return description;
   }
 }
