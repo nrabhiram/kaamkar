@@ -30,8 +30,4 @@ export class Utils {
   static buildTitle(title: string) {
     return title;
   }
-
-  static buildDescription(description: string) {
-    return description;
-  }
 }

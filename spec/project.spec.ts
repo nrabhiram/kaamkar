@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
+import { Description } from '../src/description';
 import { ItemsList } from '../src/itemsList';
 import { Project } from '../src/project';
 import { Title } from '../src/title';
@@ -10,7 +11,7 @@ describe('Project', () => {
   beforeEach(() => {
     project = new Project(
       new Title('Test Project'),
-      Utils.buildDescription('This is a test project.'),
+      new Description('This is a test project.'),
       new ItemsList()
     );
   });
@@ -433,7 +434,7 @@ describe('Project', () => {
     it('A project title is updated to “Untitled Project” when edited to a blank', () => {
       project.update(
         new Title(''),
-        Utils.buildDescription('This is a project description')
+        new Description('This is a project description')
       );
       expect(project.title).toEqual(new Title('Untitled Project'));
     });
@@ -441,9 +442,17 @@ describe('Project', () => {
     it('A project title is updated to the edited value if it is not a blank', () => {
       project.update(
         new Title('Test Title'),
-        Utils.buildDescription('This is a project description')
+        new Description('This is a project description')
       );
       expect(project.title.text).toBe('Test Title');
+    });
+
+    it('A project description is updated to the edited value', () => {
+      project.update(
+        new Title('Test Title'),
+        new Description('This is a project description')
+      );
+      expect(project.description.text).toBe('This is a project description');
     });
   });
 });
