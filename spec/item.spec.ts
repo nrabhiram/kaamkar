@@ -36,4 +36,19 @@ describe('Item', () => {
     );
     expect(item.title.text).toBe('Test Title 2');
   });
+
+  it('An item description is updated to the edited value', () => {
+    let item = new Item(
+      new ItemTitle('Test Title'),
+      new Description('Test Description'),
+      Status.TODO
+    );
+    const updatedItem = new Item(
+      new ItemTitle('Test Title'),
+      new Description('Test Description 02'),
+      Status.TODO
+    );
+    item = item.update(updatedItem);
+    expect(item.description.text).toBe('Test Description 02');
+  });
 });

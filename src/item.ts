@@ -14,6 +14,9 @@ export class Item {
   }
 
   update(item: Item) {
-    return item;
+    const updatedTitle = this.title.update(item.title);
+    const updatedDescription = this.description.update(item.description);
+    const updatedStatus = item.status;
+    return new Item(updatedTitle, updatedDescription, updatedStatus);
   }
 }
