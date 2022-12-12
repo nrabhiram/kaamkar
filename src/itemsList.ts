@@ -1,4 +1,7 @@
-import { Item, Status, Utils } from './utils';
+import { Description } from './description';
+import { Item } from './item';
+import { ItemTitle } from './itemTitle';
+import { Category, Status } from './status';
 
 export class ItemsList {
   items: Item[] = [];
@@ -14,7 +17,7 @@ export class ItemsList {
   private itemsOfStatus(status: Status) {
     const items: Item[] = [];
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i]?.status === status) {
+      if (status.equals(this.items[i].status)) {
         items.push(this.items[i]);
       }
     }
@@ -22,24 +25,24 @@ export class ItemsList {
   }
 
   toDoItems() {
-    return this.itemsOfStatus(Utils.buildStatus(Status.TODO));
+    const status = new Status(Category.TODO);
+    return this.itemsOfStatus(status);
   }
 
   progressItems() {
-    return this.itemsOfStatus(Utils.buildStatus(Status.PROGRESS));
+    const status = new Status(Category.PROGRESS);
+    return this.itemsOfStatus(status);
   }
 
   completeItems() {
-    return this.itemsOfStatus(Utils.buildStatus(Status.COMPLETED));
+    const status = new Status(Category.COMPLETED);
+    return this.itemsOfStatus(status);
   }
 
-  add(title: string, status: Status, id: number) {
-    const newItem = Utils.buildItem(
-      Utils.buildTitle(title),
-      Utils.buildStatus(status),
-      id
-    );
+  add(title: ItemTitle, description: Description, status: Status, id: number) {
+    const newItem = new Item(title, description, status, id);
     this.items.push(newItem);
+    return newItem;
   }
 
   delete(item: Item) {
