@@ -33,7 +33,7 @@ export class Project {
   }
 
   add(this: Project, title: string, status: Status) {
-    this.items = this.items.add(
+    this.items.add(
       Utils.buildTitle(title),
       Utils.buildStatus(status),
       this._createdItems
@@ -42,7 +42,7 @@ export class Project {
   }
 
   delete(this: Project, item: Item) {
-    this.items = this.items.delete(item);
+    this.items.delete(item);
   }
 
   update(title: ProjectTitle, description: Description) {

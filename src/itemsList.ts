@@ -40,7 +40,6 @@ export class ItemsList {
       id
     );
     this.items.push(newItem);
-    return new ItemsList(this.items);
   }
 
   delete(item: Item) {
@@ -50,6 +49,6 @@ export class ItemsList {
         items.push(this.items[i]);
       }
     }
-    return new ItemsList(items);
+    this.items = items;
   }
 }
