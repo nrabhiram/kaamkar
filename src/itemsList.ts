@@ -5,12 +5,21 @@ import { Category, Status } from './status';
 
 export class ItemsList {
   items: Item[] = [];
+  private _itemsCreated: number;
 
   constructor(items?: Item[]) {
-    if (items) {
+    let highestId = 0;
+    if (items && items.length > 0) {
       this.items = items;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].id > highestId) {
+          highestId = items[i].id;
+        }
+      }
+      this._itemsCreated = highestId + 1;
     } else {
       this.items = [];
+      this._itemsCreated = 0;
     }
   }
 
@@ -39,9 +48,10 @@ export class ItemsList {
     return this.itemsOfStatus(status);
   }
 
-  add(title: ItemTitle, description: Description, status: Status, id: number) {
-    const newItem = new Item(title, description, status, id);
+  add(title: ItemTitle, description: Description, status: Status) {
+    const newItem = new Item(title, description, status, this._itemsCreated);
     this.items.push(newItem);
+    this._itemsCreated++;
     return newItem;
   }
 

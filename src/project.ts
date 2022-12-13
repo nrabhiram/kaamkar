@@ -11,14 +11,12 @@ export class Project {
   description: Description;
   date: Date;
   items: ItemsList;
-  private _createdItems: number;
 
   constructor(title: ProjectTitle, description: Description, items: ItemsList) {
     this.title = title;
     this.description = description;
     this.date = new Date();
     this.items = items;
-    this._createdItems = 0;
   }
 
   progress(this: Project) {
@@ -41,13 +39,7 @@ export class Project {
     description: Description,
     status: Status
   ) {
-    const newItem = this.items.add(
-      title,
-      description,
-      status,
-      this._createdItems
-    );
-    this._createdItems++;
+    const newItem = this.items.add(title, description, status);
     return newItem;
   }
 

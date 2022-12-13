@@ -157,7 +157,7 @@ describe('Project', () => {
   describe('Project Organization', () => {
     it('A project with 0 items has a list of 0 to-do items', () => {
       const toDoItems = project.toDoItems();
-      expect(toDoItems).toEqual(new ItemsList());
+      expect(toDoItems.items).toEqual([]);
     });
 
     it('A project with a single item that is yet to be started has the item listed as the only to-do item', () => {
@@ -167,7 +167,7 @@ describe('Project', () => {
         new Status(Category.TODO)
       );
       const toDoItems = project.toDoItems();
-      expect(toDoItems).toEqual(new ItemsList([item]));
+      expect(toDoItems.items).toEqual([item]);
     });
 
     it('A project with 3 items, the first 2 yet to be started, and the last 1 completed, has only the first 2 listed as to do items', () => {
@@ -187,12 +187,12 @@ describe('Project', () => {
         new Status(Category.COMPLETED)
       );
       const toDoItems = project.toDoItems();
-      expect(toDoItems).toEqual(new ItemsList([item1, item2]));
+      expect(toDoItems.items).toEqual([item1, item2]);
     });
 
     it('A project with 0 items has a list of 0 progress items', () => {
       const progressItems = project.progressItems();
-      expect(progressItems).toEqual(new ItemsList());
+      expect(progressItems.items).toEqual([]);
     });
 
     it('A project with a single item that is in progress has the item listed as the only progress item', () => {
@@ -202,7 +202,7 @@ describe('Project', () => {
         new Status(Category.PROGRESS)
       );
       const progressItems = project.progressItems();
-      expect(progressItems).toEqual(new ItemsList([item]));
+      expect(progressItems.items).toEqual([item]);
     });
 
     it('A project with 3 items, the first 2 in progress, and the last 1 completed, has only the first 2 listed as progress items', () => {
@@ -222,12 +222,12 @@ describe('Project', () => {
         new Status(Category.COMPLETED)
       );
       const progressItems = project.progressItems();
-      expect(progressItems).toEqual(new ItemsList([item1, item2]));
+      expect(progressItems.items).toEqual([item1, item2]);
     });
 
     it('A project with 0 items has a list of 0 completed items', () => {
       const completeItems = project.completeItems();
-      expect(completeItems).toEqual(new ItemsList());
+      expect(completeItems.items).toEqual([]);
     });
 
     it('A project with a single item that is completed has the item listed as the only completed item', () => {
@@ -237,7 +237,7 @@ describe('Project', () => {
         new Status(Category.COMPLETED)
       );
       const completeItems = project.completeItems();
-      expect(completeItems).toEqual(new ItemsList([item]));
+      expect(completeItems.items).toEqual([item]);
     });
 
     it('A project with 3 items, the first 2 completed, and the last 1 to do, has only the first 2 listed as completed items', () => {
@@ -257,7 +257,7 @@ describe('Project', () => {
         new Status(Category.TODO)
       );
       const completeItems = project.completeItems();
-      expect(completeItems).toEqual(new ItemsList([item1, item2]));
+      expect(completeItems.items).toEqual([item1, item2]);
     });
 
     it('A project with 2 items, 1st yet to start, and 2nd in progress, has only the 2nd one listed as a progress item', () => {
@@ -272,7 +272,7 @@ describe('Project', () => {
         new Status(Category.PROGRESS)
       );
       const progressItems = project.progressItems();
-      expect(progressItems).toEqual(new ItemsList([item]));
+      expect(progressItems.items).toEqual([item]);
     });
   });
 
@@ -284,7 +284,7 @@ describe('Project', () => {
         new Status(Category.TODO)
       );
       project.delete(item);
-      expect(project.items).toEqual(new ItemsList());
+      expect(project.items.items).toEqual([]);
     });
 
     it('A project with 2 items has only the 2nd item left after deleting the 1st item', () => {
@@ -299,7 +299,7 @@ describe('Project', () => {
         new Status(Category.TODO)
       );
       project.delete(item1);
-      expect(project.items).toEqual(new ItemsList([item2]));
+      expect(project.items.items).toEqual([item2]);
     });
 
     it('A project with 3 items, has only 1st and 3rd items left after deleting the 2nd one', () => {
@@ -319,7 +319,7 @@ describe('Project', () => {
         new Status(Category.TODO)
       );
       project.delete(item2);
-      expect(project.items).toEqual(new ItemsList([item1, item3]));
+      expect(project.items.items).toEqual([item1, item3]);
     });
 
     it('A project with 3 items, the 1st and 3rd being identical, has only the 1st and 2nd items left after deleting the 3rd one', () => {
@@ -339,7 +339,7 @@ describe('Project', () => {
         new Status(Category.TODO)
       );
       project.delete(item3);
-      expect(project.items).toEqual(new ItemsList([item1, item2]));
+      expect(project.items.items).toEqual([item1, item2]);
     });
   });
 
