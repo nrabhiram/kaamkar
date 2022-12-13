@@ -11,12 +11,23 @@ export class Project {
   description: Description;
   date: Date;
   items: ItemsList;
+  id: number;
 
-  constructor(title: ProjectTitle, description: Description, items: ItemsList) {
+  constructor(
+    title: ProjectTitle,
+    description: Description,
+    items: ItemsList,
+    id?: number
+  ) {
     this.title = title;
     this.description = description;
     this.date = new Date();
     this.items = items;
+    if (id) {
+      this.id = id;
+    } else {
+      this.id = 0;
+    }
   }
 
   progress(this: Project) {
