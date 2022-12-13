@@ -67,4 +67,26 @@ describe('Project List', () => {
       expect(projectsList.projects).toEqual([project1, project2]);
     });
   });
+
+  describe('Project List Project Edit', () => {
+    it('A project list project is edited to the new title', () => {
+      const title = new ProjectTitle('Test Project');
+      const description = new Description('This is a Test Project');
+      const project = projectsList.add(title, description);
+      const editedTitle = title.update(new ProjectTitle('Edited Test Project'));
+      projectsList.edit(project, editedTitle, description);
+      expect(project.title).toEqual(editedTitle);
+    });
+
+    it('A project list project is edited to the new description', () => {
+      const title = new ProjectTitle('Test Project');
+      const description = new Description('This is a Test Project');
+      const project = projectsList.add(title, description);
+      const editedDescription = description.update(
+        new Description('This is an Edited Test Project')
+      );
+      projectsList.edit(project, title, editedDescription);
+      expect(project.description).toEqual(editedDescription);
+    });
+  });
 });

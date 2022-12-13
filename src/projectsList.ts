@@ -44,4 +44,13 @@ export class ProjectsList {
     }
     this.projects = projects;
   }
+
+  edit(project: Project, title: ProjectTitle, description: Description) {
+    for (let i = 0; i < this.projects.length; i++) {
+      if (project.id === this.projects[i].id) {
+        this.projects[i].update(title, description);
+        return;
+      }
+    }
+  }
 }
