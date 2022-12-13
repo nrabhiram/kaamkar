@@ -11,7 +11,7 @@ describe('Project List', () => {
   });
 
   describe('Project List Project Delete', () => {
-    it('A project list with 1 project has 0 project left upon deletion', () => {
+    it('A project list with 1 project has 0 projects left upon deletion', () => {
       const project = projectsList.add(
         new ProjectTitle('Test Project'),
         new Description('This is a Test Project')
@@ -20,7 +20,7 @@ describe('Project List', () => {
       expect(projectsList.projects).toEqual([]);
     });
 
-    it('A project with 2 projects has only the 2nd project left after deleting the 1st project', () => {
+    it('A project list with 2 projects has only the 2nd project left after deleting the 1st project', () => {
       const project1 = projectsList.add(
         new ProjectTitle('Test Project 1'),
         new Description('This is a Test Project')
@@ -33,7 +33,7 @@ describe('Project List', () => {
       expect(projectsList.projects).toEqual([project2]);
     });
 
-    it('A project with 3 items, has only 1st and 3rd items left after deleting the 2nd one', () => {
+    it('A project list with 3 projects, has only 1st and 3rd projects left after deleting the 2nd one', () => {
       const project1 = projectsList.add(
         new ProjectTitle('Test Project 1'),
         new Description('This is a Test Project')
@@ -50,7 +50,7 @@ describe('Project List', () => {
       expect(projectsList.projects).toEqual([project1, project3]);
     });
 
-    it('A project with 3 items, the 1st and 3rd being identical, has only the 1st and 2nd items left after deleting the 3rd one', () => {
+    it('A project with 3 projects, the 1st and 3rd being identical, has only the 1st and 2nd projects left after deleting the 3rd one', () => {
       const project1 = projectsList.add(
         new ProjectTitle('Test Project 1'),
         new Description('This is a Test Project')
