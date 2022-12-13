@@ -6,17 +6,27 @@ export class Item {
   title: ItemTitle;
   description: Description;
   status: Status;
+  id: number;
 
-  constructor(title: ItemTitle, description: Description, status: Status) {
+  constructor(
+    title: ItemTitle,
+    description: Description,
+    status: Status,
+    id?: number
+  ) {
     this.title = title;
     this.description = description;
     this.status = status;
+    if (id) {
+      this.id = id;
+    } else {
+      this.id = 0;
+    }
   }
 
-  update(item: Item) {
-    const updatedTitle = this.title.update(item.title);
-    const updatedDescription = this.description.update(item.description);
-    const updatedStatus = item.status.update(item.status);
-    return new Item(updatedTitle, updatedDescription, updatedStatus);
+  update(title: ItemTitle, description: Description, status: Status) {
+    this.title = this.title.update(title);
+    this.description = this.description.update(description);
+    this.status = this.status.update(status);
   }
 }

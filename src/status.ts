@@ -14,4 +14,8 @@ export class Status {
   update(status: Status) {
     return new Status(status.category);
   }
+
+  equals(status: Status) {
+    return this.category === status.category;
+  }
 }

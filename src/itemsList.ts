@@ -1,20 +1,32 @@
-import { Item, Status, Utils } from './utils';
+import { Description } from './description';
+import { Item } from './item';
+import { ItemTitle } from './itemTitle';
+import { Category, Status } from './status';
 
 export class ItemsList {
   items: Item[] = [];
+  private _itemsCreated: number;
 
   constructor(items?: Item[]) {
-    if (items) {
+    let highestId = 0;
+    if (items && items.length > 0) {
       this.items = items;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].id > highestId) {
+          highestId = items[i].id;
+        }
+      }
+      this._itemsCreated = highestId + 1;
     } else {
       this.items = [];
+      this._itemsCreated = 0;
     }
   }
 
   private itemsOfStatus(status: Status) {
     const items: Item[] = [];
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i]?.status === status) {
+      if (status.equals(this.items[i].status)) {
         items.push(this.items[i]);
       }
     }
@@ -22,25 +34,25 @@ export class ItemsList {
   }
 
   toDoItems() {
-    return this.itemsOfStatus(Utils.buildStatus(Status.TODO));
+    const status = new Status(Category.TODO);
+    return this.itemsOfStatus(status);
   }
 
   progressItems() {
-    return this.itemsOfStatus(Utils.buildStatus(Status.PROGRESS));
+    const status = new Status(Category.PROGRESS);
+    return this.itemsOfStatus(status);
   }
 
   completeItems() {
-    return this.itemsOfStatus(Utils.buildStatus(Status.COMPLETED));
+    const status = new Status(Category.COMPLETED);
+    return this.itemsOfStatus(status);
   }
 
-  add(title: string, status: Status, id: number) {
-    const newItem = Utils.buildItem(
-      Utils.buildTitle(title),
-      Utils.buildStatus(status),
-      id
-    );
+  add(title: ItemTitle, description: Description, status: Status) {
+    const newItem = new Item(title, description, status, this._itemsCreated);
     this.items.push(newItem);
-    return new ItemsList(this.items);
+    this._itemsCreated++;
+    return newItem;
   }
 
   delete(item: Item) {
@@ -50,6 +62,6 @@ export class ItemsList {
         items.push(this.items[i]);
       }
     }
-    return new ItemsList(items);
+    this.items = items;
   }
 }
