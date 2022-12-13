@@ -64,4 +64,13 @@ export class ItemsList {
     }
     this.items = items;
   }
+
+  edit(item: Item, title: ItemTitle, description: Description, status: Status) {
+    for (let i = 0; i < this.items.length; i++) {
+      if (item.id === this.items[i].id) {
+        this.items[i].update(title, description, status);
+        return;
+      }
+    }
+  }
 }

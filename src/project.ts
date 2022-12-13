@@ -47,6 +47,10 @@ export class Project {
     this.items.delete(item);
   }
 
+  edit(item: Item, title: ItemTitle, description: Description, status: Status) {
+    this.items.edit(item, title, description, status);
+  }
+
   update(title: ProjectTitle, description: Description) {
     this.title = this.title.update(title);
     this.description = this.description.update(description);

@@ -368,4 +368,38 @@ describe('Project', () => {
       expect(project.description.text).toBe('This is a project description');
     });
   });
+
+  describe('Project Item Edit', () => {
+    it('A project item is edited to the new status', () => {
+      const title = new ItemTitle('Test Item');
+      const description = new Description('This is a Test Item');
+      const status = new Status(Category.TODO);
+      const item = project.add(title, description, status);
+      const editedStatus = status.update(new Status(Category.PROGRESS));
+      project.edit(item, title, description, editedStatus);
+      expect(item.status).toEqual(editedStatus);
+    });
+
+    it('A project item is edited to the new title', () => {
+      const title = new ItemTitle('Test Item');
+      const description = new Description('This is a Test Item');
+      const status = new Status(Category.TODO);
+      const item = project.add(title, description, status);
+      const editedTitle = title.update(new ItemTitle('Edited Test Item'));
+      project.edit(item, editedTitle, description, status);
+      expect(item.title).toEqual(editedTitle);
+    });
+
+    it('A project item is edited to the new description', () => {
+      const title = new ItemTitle('Test Item');
+      const description = new Description('This is a Test Item');
+      const status = new Status(Category.TODO);
+      const item = project.add(title, description, status);
+      const editedDescription = description.update(
+        new Description('This is an Edited Test Item')
+      );
+      project.edit(item, title, editedDescription, status);
+      expect(item.description).toEqual(editedDescription);
+    });
+  });
 });
