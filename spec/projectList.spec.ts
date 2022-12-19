@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Description } from '../src/description';
-import { ProjectsList } from '../src/projectsList';
-import { ProjectTitle } from '../src/projectTitle';
+import { Description } from '../src/model/description';
+import { ProjectsList } from '../src/model/projectsList';
+import { ProjectTitle } from '../src/model/projectTitle';
 
 let projectsList: ProjectsList;
 

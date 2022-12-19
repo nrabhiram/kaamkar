@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { Description } from '../src/description';
-import { Item } from '../src/item';
-import { ItemTitle } from '../src/itemTitle';
-import { Category, Status } from '../src/status';
+import { Description } from '../src/model/description';
+import { Item } from '../src/model/item';
+import { ItemTitle } from '../src/model/itemTitle';
+import { Category, Status } from '../src/model/status';
 
 describe('Item', () => {
   it('An item title is updated to “Untitled Item” when edited to a blank', () => {

@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Description } from '../src/description';
-import { ItemsList } from '../src/itemsList';
-import { ItemTitle } from '../src/itemTitle';
-import { Project } from '../src/project';
-import { ProjectTitle } from '../src/projectTitle';
-import { Category, Status } from '../src/status';
+import { Description } from '../src/model/description';
+import { ItemsList } from '../src/model/itemsList';
+import { ItemTitle } from '../src/model/itemTitle';
+import { Project } from '../src/model/project';
+import { ProjectTitle } from '../src/model/projectTitle';
+import { Category, Status } from '../src/model/status';
 
 let project: Project;
 

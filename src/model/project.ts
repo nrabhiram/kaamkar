@@ -4,7 +4,7 @@ import { ItemsList } from './itemsList';
 import { ItemTitle } from './itemTitle';
 import { ProjectTitle } from './projectTitle';
 import { Status } from './status';
-import { Utils } from './utils';
+import { Utils } from '../utils';
 
 export class Project {
   title: ProjectTitle;

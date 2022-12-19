@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ItemTitle } from '../src/itemTitle';
+import { ItemTitle } from '../src/model/itemTitle';
 
 describe('Item Title', () => {
   it('An item title is set to “Untitled Item” when set to a blank', () => {
