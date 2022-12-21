@@ -15,6 +15,9 @@ module.exports = {
 		},
 		compress: true,
 		port: 9000,
+		historyApiFallback: {
+			index: 'index.html'
+		}
 	},
   	devtool: 'inline-source-map',
 	module: {

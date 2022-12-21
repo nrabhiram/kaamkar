@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { Description } from '../src/description';
+import { Description } from '../src/model/description';
 
 describe('Description', () => {
   it('A description is updated to the edited value', () => {

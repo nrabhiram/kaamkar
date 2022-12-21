@@ -4,7 +4,7 @@ import { ItemsList } from './itemsList';
 import { ItemTitle } from './itemTitle';
 import { ProjectTitle } from './projectTitle';
 import { Status } from './status';
-import { Utils } from './utils';
+import { Utils } from '../utils';
 
 export class Project {
   title: ProjectTitle;
@@ -17,11 +17,16 @@ export class Project {
     title: ProjectTitle,
     description: Description,
     items: ItemsList,
-    id?: number
+    id?: number,
+    date?: Date
   ) {
     this.title = title;
     this.description = description;
-    this.date = new Date();
+    if (date) {
+      this.date = date;
+    } else {
+      this.date = new Date();
+    }
     this.items = items;
     if (id) {
       this.id = id;

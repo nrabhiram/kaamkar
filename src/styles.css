@@ -47,7 +47,7 @@
     @apply fill-current h-8 w-8 mr-2;
 }
 
-.nav-title {
+.nav-title-text {
     @apply font-semibold text-xl tracking-tight;
 }
 
@@ -284,7 +284,7 @@
 }
 
 .form-modal-bg {
-    @apply fixed inset-0 bg-gray-300 bg-opacity-30 transition-opacity;
+    @apply fixed inset-0 bg-gray-300 bg-opacity-30 transition-opacity duration-300;
 }
 
 .modal-container {
@@ -312,7 +312,7 @@
 }
 
 .form-input {
-    @apply bg-dark-300 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm text-light-300;
+    @apply bg-dark-300 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:bg-dark-300 sm:text-sm text-light-300;
 }
 
 .form-input-description {
@@ -324,7 +324,7 @@
 }
 
 .form-category-options {
-    @apply z-10 bg-dark-200 mt-2 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none;
+    @apply z-10 bg-dark-200 mt-2 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-all duration-200;
 }
 
 .form-category-option-container {
@@ -356,7 +356,7 @@
 }
 
 .msg-modal-bg {
-    @apply fixed inset-0 bg-gray-300 bg-opacity-30 transition-opacity;
+    @apply fixed inset-0 bg-gray-300 bg-opacity-30 transition-opacity duration-300;
 }
 
 .msg-container {
@@ -364,7 +364,7 @@
 }
 
 .msg-border {
-    @apply relative transform overflow-hidden rounded-lg bg-dark-300 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg;
+    @apply relative transform overflow-hidden rounded-lg bg-dark-300 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg duration-300;
 }
 
 .msg-content {
@@ -405,4 +405,55 @@
 
 .msg-cancel-btn {
     @apply mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm;
+}
+
+/* .modal-transition-in {
+    @apply ease-out duration-500 bg-opacity-100;
+} */
+
+/* .modal {
+    transition: opacity 0.25s ease;
+}
+  
+.modal-active {
+    overflow-x: hidden;
+    overflow-y: visible !important;
+} */
+
+.modal-ease-out {
+    @apply opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95;
+}
+
+.modal-ease-in {
+    @apply opacity-100 translate-y-0 sm:scale-100;
+}
+
+.modal-bg-ease-in {
+    @apply opacity-100;
+}
+
+.modal-bg-ease-out {
+    @apply opacity-0;
+}
+
+.collapsible {
+  display: none;  
+}
+
+.active {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.dropdown {
+    display: none;
+}
+
+.dropdown-ease-out {
+    @apply transform opacity-0 scale-90;
+}
+
+.dropdown-ease-in {
+    @apply transform opacity-100 scale-100;
 }
