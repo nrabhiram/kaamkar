@@ -17,11 +17,16 @@ export class Project {
     title: ProjectTitle,
     description: Description,
     items: ItemsList,
-    id?: number
+    id?: number,
+    date?: Date
   ) {
     this.title = title;
     this.description = description;
-    this.date = new Date();
+    if (date) {
+      this.date = date;
+    } else {
+      this.date = new Date();
+    }
     this.items = items;
     if (id) {
       this.id = id;

@@ -1,13 +1,11 @@
 import { ProjectController } from './controller/projectController';
-import { ProjectsList } from './model/projectsList';
+import { Controller } from './controller/controller';
 import { ProjectsListController } from './controller/projectsListController';
 import { Router } from './router';
 import './styles.css';
 
-window.onpopstate = new Router().route;
-
 export const state = {
-  projects: new ProjectsList(),
+  projects: Controller.read(),
   projectId: 0,
   project: function () {
     for (let i = 0; i < this.projects.projects.length; i++) {
@@ -19,6 +17,7 @@ export const state = {
 };
 
 new Router().route();
+window.onpopstate = new Router().route;
 
 window.addEventListener('click', (e: any) => {
   const addProjectBtn = e.target.matches('#add-project-form-submit-btn');

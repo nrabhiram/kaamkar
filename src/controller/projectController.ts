@@ -3,11 +3,13 @@ import { Project } from '../model/project';
 import { ProjectView } from '../view/projectView';
 import { Renderer } from '../renderer';
 import { Category, Status } from '../model/status';
+import { Controller } from './controller';
 
-export class ProjectController {
+export class ProjectController extends Controller {
   project: Project;
 
   constructor(project: Project) {
+    super();
     this.project = project;
   }
 
@@ -22,6 +24,7 @@ export class ProjectController {
     const itemStatus = new Status(Category.TODO);
     const newItem = this.project.add(itemTitle, itemDescription, itemStatus);
     const renderedNewItem = renderer.item(newItem);
+    this.write();
     view.add(renderedNewItem);
   }
 
@@ -37,6 +40,7 @@ export class ProjectController {
     const itemDescription = parser.description(descriptionInput);
     const itemStatus = parser.status(statusInput);
     this.project.edit(item, itemTitle, itemDescription, itemStatus);
+    this.write();
     view.edit();
   }
 
@@ -46,6 +50,7 @@ export class ProjectController {
     const itemInput = view.selectedItem();
     const item = parser.item(itemInput);
     this.project.delete(item);
+    this.write();
     view.delete();
   }
 }

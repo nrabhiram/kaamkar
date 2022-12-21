@@ -193,7 +193,7 @@ export class ProjectsListView extends PageView {
     projects: {
       title: string;
       description: string;
-      date: Date;
+      date: string;
       progress: number;
       id: number;
     }[]
@@ -257,7 +257,7 @@ export class ProjectsListView extends PageView {
   private renderProject(project: {
     title: string;
     description: string;
-    date: Date;
+    date: string;
     progress: number;
     id: number;
   }) {
@@ -274,9 +274,7 @@ export class ProjectsListView extends PageView {
             </div>
             ${this.truncateDescription(project.description)}
             <div class="project-card-footer">
-                <p class="project-date-created">${project.date.getDate()} ${
-      ProjectsListView.months[project.date.getMonth()]
-    } ${project.date.getFullYear()}</p>
+                <p class="project-date-created">${project.date}</p>
                 <div class="project-options">
                     <button type="button" class="project-btn edit-project-btn mr-2">
                         <svg class="project-btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -355,7 +353,7 @@ export class ProjectsListView extends PageView {
     projects: {
       title: string;
       description: string;
-      date: Date;
+      date: string;
       progress: number;
       id: number;
     }[]
@@ -376,7 +374,7 @@ export class ProjectsListView extends PageView {
   add(project: {
     title: string;
     description: string;
-    date: Date;
+    date: string;
     progress: number;
     id: number;
   }) {

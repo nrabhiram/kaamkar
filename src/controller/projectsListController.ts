@@ -2,11 +2,13 @@ import { Parser } from '../parser';
 import { ProjectsList } from '../model/projectsList';
 import { ProjectsListView } from '../view/projectsListView';
 import { Renderer } from '../renderer';
+import { Controller } from './controller';
 
-export class ProjectsListController {
+export class ProjectsListController extends Controller {
   projects: ProjectsList;
 
   constructor(projects: ProjectsList) {
+    super();
     this.projects = projects;
   }
 
@@ -20,6 +22,7 @@ export class ProjectsListController {
     const projectDescription = parser.description(descriptionInput);
     const newProject = this.projects.add(projectTitle, projectDescription);
     const renderedNewProject = renderer.project(newProject);
+    this.write();
     view.add(renderedNewProject);
   }
 
@@ -33,6 +36,7 @@ export class ProjectsListController {
     const editedProjectTitle = parser.projectTitle(titleInput);
     const editedProjectDescription = parser.description(descriptionInput);
     this.projects.edit(project, editedProjectTitle, editedProjectDescription);
+    this.write();
     view.edit();
   }
 
@@ -42,6 +46,7 @@ export class ProjectsListController {
     const projectInput = view.selectedProject();
     const project = parser.project(projectInput);
     this.projects.delete(project);
+    this.write();
     view.delete();
   }
 }

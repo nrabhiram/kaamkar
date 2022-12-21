@@ -3,6 +3,7 @@ import { Item } from './model/item';
 import { ItemsList } from './model/itemsList';
 import { ItemTitle } from './model/itemTitle';
 import { Project } from './model/project';
+import { ProjectsList } from './model/projectsList';
 import { ProjectTitle } from './model/projectTitle';
 import { Category, Status } from './model/status';
 
@@ -44,5 +45,51 @@ export class Parser {
       new Status(item.status),
       item.id
     );
+  }
+
+  projectsList(
+    projects: {
+      title: string;
+      description: string;
+      date: string;
+      progress: number;
+      items: {
+        title: string;
+        description: string;
+        status: Category;
+        id: number;
+      }[];
+      id: number;
+    }[]
+  ) {
+    const projectsArr: Project[] = [];
+    for (let i = 0; i < projects.length; i++) {
+      const projectTitle = this.projectTitle(projects[i].title);
+      const projectDescription = this.description(projects[i].description);
+      const projectDate = new Date(projects[i].date);
+      const projectId = projects[i].id;
+      const projectItemsArr: Item[] = [];
+      for (let j = 0; j < projects[i].items.length; j++) {
+        const itemTitle = this.itemTitle(projects[i].items[j].title);
+        const itemDescription = this.description(
+          projects[i].items[j].description
+        );
+        const itemStatus = this.status(projects[i].items[j].status);
+        const itemId = projects[i].items[j].id;
+        const item = new Item(itemTitle, itemDescription, itemStatus, itemId);
+        projectItemsArr.push(item);
+      }
+      const itemsList = new ItemsList(projectItemsArr);
+      const project = new Project(
+        projectTitle,
+        projectDescription,
+        itemsList,
+        projectId,
+        projectDate
+      );
+      projectsArr.push(project);
+    }
+    const projectsList = new ProjectsList(projectsArr);
+    return projectsList;
   }
 }
