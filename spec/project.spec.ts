@@ -402,4 +402,18 @@ describe('Project', () => {
       expect(item.description).toEqual(editedDescription);
     });
   });
+
+  describe('Project Items Arrange', () => {
+    it('A project with 1 to-do item, upon adding a new to-do item, arranges it as the 2nd to-do item', () => {
+      const title1 = new ItemTitle('Test Item 1');
+      const description1 = new Description('This is Test Item 1');
+      const status1 = new Status(Category.TODO);
+      project.add(title1, description1, status1);
+      const title2 = new ItemTitle('Test Item 2');
+      const description2 = new Description('This is Test Item 2');
+      const status2 = new Status(Category.TODO);
+      const item2 = project.add(title2, description2, status2);
+      expect(project.items.toDoItems().items[1]).toEqual(item2);
+    });
+  });
 });
