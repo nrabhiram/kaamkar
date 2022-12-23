@@ -415,5 +415,18 @@ describe('Project', () => {
       const item2 = project.add(title2, description2, status2);
       expect(project.items.toDoItems().items[1]).toEqual(item2);
     });
+
+    it('A project with 1st a to-do item and 2nd a progress item, upon updating the status of the to-do item to progress, arranges it as the 2nd progress item', () => {
+      const title1 = new ItemTitle('Test Item 1');
+      const description1 = new Description('This is Test Item 1');
+      const status1 = new Status(Category.TODO);
+      const item1 = project.add(title1, description1, status1);
+      const title2 = new ItemTitle('Test Item 2');
+      const description2 = new Description('This is Test Item 2');
+      const status2 = new Status(Category.PROGRESS);
+      project.add(title2, description2, status2);
+      project.edit(item1, title1, description1, new Status(Category.PROGRESS));
+      expect(project.items.progressItems().items[1]).toEqual(item1);
+    });
   });
 });

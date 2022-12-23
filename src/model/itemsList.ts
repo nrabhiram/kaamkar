@@ -69,6 +69,15 @@ export class ItemsList {
     for (let i = 0; i < this.items.length; i++) {
       if (item.id === this.items[i].id) {
         this.items[i].update(title, description, status);
+        const toDoEndIndex = this.toDoItems().items.length - 1;
+        const progressEndIndex =
+          this.progressItems().items.length - 1 + toDoEndIndex;
+        const currentItem = this.items[i];
+        const increment = progressEndIndex < i ? -1 : 1;
+        for (let j = 0; j !== progressEndIndex + 1; j += increment) {
+          this.items[j] = this.items[j + increment];
+        }
+        this.items[progressEndIndex + 1] = currentItem;
         return;
       }
     }
