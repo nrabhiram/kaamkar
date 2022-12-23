@@ -72,7 +72,7 @@ export class ItemsList {
         const currentItem = this.items[i];
         let newItemIndex = 0;
         if (currentItem.status.category === Category.TODO) {
-          newItemIndex = this.toDoItems().items.length;
+          newItemIndex = this.toDoItems().items.length - 1;
         } else if (currentItem.status.category === Category.PROGRESS) {
           newItemIndex =
             this.toDoItems().items.length +
@@ -86,7 +86,7 @@ export class ItemsList {
             1;
         }
         const increment = newItemIndex < i ? -1 : 1;
-        for (let j = 0; j !== newItemIndex; j += increment) {
+        for (let j = i; j !== newItemIndex; j += increment) {
           this.items[j] = this.items[j + increment];
         }
         this.items[newItemIndex] = currentItem;
