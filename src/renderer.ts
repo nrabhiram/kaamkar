@@ -85,7 +85,7 @@ export class Renderer {
       id: number;
     }[] = [];
     for (let i = 0; i < items.items.length; i++) {
-      const renderedItem = this.item(items.items[i]);
+      const renderedItem = this.item(items.items()[i]);
       renderedItems.push(renderedItem);
     }
     return renderedItems;

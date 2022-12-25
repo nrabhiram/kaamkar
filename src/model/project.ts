@@ -37,8 +37,8 @@ export class Project {
 
   progress(this: Project) {
     const completeItems = this.items.completeItems();
-    const numCompleteItems = completeItems.items.length;
-    const numTotalItems = this.items.items.length;
+    const numCompleteItems = completeItems.items().length;
+    const numTotalItems = this.items.items().length;
     let percentage: number;
 
     if (!numTotalItems) {
