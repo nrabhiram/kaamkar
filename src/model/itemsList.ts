@@ -1,3 +1,4 @@
+import { Position } from '../utils';
 import { Description } from './description';
 import { Item } from './item';
 import { ItemTitle } from './itemTitle';
@@ -31,6 +32,15 @@ export class ItemsList {
       }
     }
     return new ItemsList(items);
+  }
+
+  private findItemIndex(item: Item) {
+    for (let i = 0; i < this.items.length; i++) {
+      if (item.id === this.items[i].id) {
+        return i;
+      }
+    }
+    return 0;
   }
 
   toDoItems() {
@@ -69,29 +79,20 @@ export class ItemsList {
     for (let i = 0; i < this.items.length; i++) {
       if (item.id === this.items[i].id) {
         this.items[i].update(title, description, status);
-        const currentItem = this.items[i];
-        let newItemIndex = 0;
-        if (currentItem.status.category === Category.TODO) {
-          newItemIndex = this.toDoItems().items.length - 1;
-        } else if (currentItem.status.category === Category.PROGRESS) {
-          newItemIndex =
-            this.toDoItems().items.length +
-            this.progressItems().items.length -
-            1;
-        } else if (currentItem.status.category === Category.COMPLETED) {
-          newItemIndex =
-            this.toDoItems().items.length +
-            this.progressItems().items.length +
-            this.completeItems().items.length -
-            1;
-        }
-        const increment = newItemIndex < i ? -1 : 1;
-        for (let j = i; j !== newItemIndex; j += increment) {
-          this.items[j] = this.items[j + increment];
-        }
-        this.items[newItemIndex] = currentItem;
-        return;
+        const lols = this.itemsOfStatus(status).items;
+        const lolitem = lols[lols.length - 1];
+        this.arrange(this.items[i], lolitem, Position.AFTER);
       }
     }
+  }
+
+  arrange(itemMoved: Item, itemToBeMovedTo: Item, position: Position) {
+    const newItemIndex = this.findItemIndex(itemToBeMovedTo);
+    const itemIndex = this.findItemIndex(itemMoved);
+    const increment = newItemIndex < itemIndex ? -1 : 1;
+    for (let j = itemIndex; j !== newItemIndex; j += increment) {
+      this.items[j] = this.items[j + increment];
+    }
+    this.items[newItemIndex] = itemMoved;
   }
 }

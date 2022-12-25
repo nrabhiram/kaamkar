@@ -5,6 +5,7 @@ import { ItemTitle } from '../src/model/itemTitle';
 import { Project } from '../src/model/project';
 import { ProjectTitle } from '../src/model/projectTitle';
 import { Category, Status } from '../src/model/status';
+import { Position, Utils } from '../src/utils';
 
 let project: Project;
 
@@ -453,6 +454,45 @@ describe('Project', () => {
       const item2 = project.add(title2, description2, status2);
       project.edit(item2, title2, description2, new Status(Category.TODO));
       expect(project.items.toDoItems().items[1]).toEqual(item2);
+    });
+
+    it('A project with 2 to-do items, upon placing the the 2nd to-do item above the 1st to-do item, arranges it as the new 1st to-do item', () => {
+      const title1 = new ItemTitle('Test Item 1');
+      const description1 = new Description('This is Test Item 1');
+      const status1 = new Status(Category.TODO);
+      const item1 = project.add(title1, description1, status1);
+      const title2 = new ItemTitle('Test Item 2');
+      const description2 = new Description('This is Test Item 2');
+      const status2 = new Status(Category.TODO);
+      const item2 = project.add(title2, description2, status2);
+      project.arrange(item2, item1, Utils.buildPosition(Position.BEFORE));
+      expect(project.items.toDoItems().items[0]).toEqual(item2);
+    });
+
+    it('A project with 2 progress items, upon placing the the 2nd progress item above the 1st progress item, arranges it as the new 1st progress item', () => {
+      const title1 = new ItemTitle('Test Item 1');
+      const description1 = new Description('This is Test Item 1');
+      const status1 = new Status(Category.PROGRESS);
+      const item1 = project.add(title1, description1, status1);
+      const title2 = new ItemTitle('Test Item 2');
+      const description2 = new Description('This is Test Item 2');
+      const status2 = new Status(Category.PROGRESS);
+      const item2 = project.add(title2, description2, status2);
+      project.arrange(item2, item1, Utils.buildPosition(Position.BEFORE));
+      expect(project.items.progressItems().items[0]).toEqual(item2);
+    });
+
+    it('A project with 2 complete items, upon placing the the 2nd complete item above the 1st complete item, arranges it as the new 1st complete item', () => {
+      const title1 = new ItemTitle('Test Item 1');
+      const description1 = new Description('This is Test Item 1');
+      const status1 = new Status(Category.COMPLETED);
+      const item1 = project.add(title1, description1, status1);
+      const title2 = new ItemTitle('Test Item 2');
+      const description2 = new Description('This is Test Item 2');
+      const status2 = new Status(Category.COMPLETED);
+      const item2 = project.add(title2, description2, status2);
+      project.arrange(item2, item1, Utils.buildPosition(Position.BEFORE));
+      expect(project.items.completeItems().items[0]).toEqual(item2);
     });
   });
 });
