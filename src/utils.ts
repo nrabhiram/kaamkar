@@ -1,15 +1,6 @@
-export enum Position {
-  BEFORE,
-  AFTER
-}
-
 export class Utils {
   static buildProgress(progress: number) {
     return progress;
-  }
-
-  static buildPosition(position: Position) {
-    return position;
   }
 }
 

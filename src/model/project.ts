@@ -4,7 +4,7 @@ import { ItemsList } from './itemsList';
 import { ItemTitle } from './itemTitle';
 import { ProjectTitle } from './projectTitle';
 import { Status } from './status';
-import { Position, Utils } from '../utils';
+import { Utils } from '../utils';
 
 export class Project {
   title: ProjectTitle;
@@ -67,8 +67,8 @@ export class Project {
     this.items.edit(item, title, description, status);
   }
 
-  arrange(itemMoved: Item, itemToBeMovedTo: Item, position: Position) {
-    this.items.arrange(itemMoved, itemToBeMovedTo, position);
+  arrange(itemMoved: Item, itemToBeMovedTo: Item) {
+    this.items.arrange(itemMoved, itemToBeMovedTo);
   }
 
   update(title: ProjectTitle, description: Description) {

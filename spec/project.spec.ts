@@ -5,7 +5,6 @@ import { ItemTitle } from '../src/model/itemTitle';
 import { Project } from '../src/model/project';
 import { ProjectTitle } from '../src/model/projectTitle';
 import { Category, Status } from '../src/model/status';
-import { Position, Utils } from '../src/utils';
 
 let project: Project;
 
@@ -496,7 +495,7 @@ describe('Project', () => {
         new Description('This is Test Item 2'),
         new Status(Category.TODO)
       );
-      project.arrange(item2, item1, Utils.buildPosition(Position.BEFORE));
+      project.arrange(item2, item1);
       expect(project.items.toDoItems().items()[0]).toEqual(item2);
     });
 
@@ -511,7 +510,7 @@ describe('Project', () => {
         new Description('This is Test Item 2'),
         new Status(Category.PROGRESS)
       );
-      project.arrange(item2, item1, Utils.buildPosition(Position.BEFORE));
+      project.arrange(item2, item1);
       expect(project.items.progressItems().items()[0]).toEqual(item2);
     });
 
@@ -526,17 +525,17 @@ describe('Project', () => {
         new Description('This is Test Item 2'),
         new Status(Category.COMPLETED)
       );
-      project.arrange(item2, item1, Utils.buildPosition(Position.BEFORE));
+      project.arrange(item2, item1);
       expect(project.items.completeItems().items()[0]).toEqual(item2);
     });
 
-    it('A project with 2 complete items and 1 to-do item, upon placing the the to-do item between the complete items, arranges it as the new 2nd complete item', () => {
-      const item1 = project.add(
+    it('A project with 2 complete items and 1 to-do item, upon placing the to-do item between the complete items, arranges it as the new 2nd complete item', () => {
+      project.add(
         new ItemTitle('Test Item 1'),
         new Description('This is Test Item 1'),
         new Status(Category.COMPLETED)
       );
-      project.add(
+      const item2 = project.add(
         new ItemTitle('Test Item 2'),
         new Description('This is Test Item 2'),
         new Status(Category.COMPLETED)
@@ -546,17 +545,17 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.TODO)
       );
-      project.arrange(item3, item1, Utils.buildPosition(Position.AFTER));
+      project.arrange(item3, item2);
       expect(project.items.completeItems().items()[1]).toEqual(item3);
     });
 
-    it('A project with 2 progress items and 1 to-do item, upon placing the the to-do item between the progress items, arranges it as the new 2nd progress item', () => {
-      const item1 = project.add(
+    it('A project with 2 progress items and 1 to-do item, upon placing the to-do item between the progress items, arranges it as the new 2nd progress item', () => {
+      project.add(
         new ItemTitle('Test Item 1'),
         new Description('This is Test Item 1'),
         new Status(Category.PROGRESS)
       );
-      project.add(
+      const item2 = project.add(
         new ItemTitle('Test Item 2'),
         new Description('This is Test Item 2'),
         new Status(Category.PROGRESS)
@@ -566,11 +565,31 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.TODO)
       );
-      project.arrange(item3, item1, Utils.buildPosition(Position.AFTER));
+      project.arrange(item3, item2);
       expect(project.items.progressItems().items()[1]).toEqual(item3);
     });
 
-    it('A project with 2 to-do items and 1 progress item, upon placing the the progress item between the to-do items, arranges it as the new 2nd to-do item', () => {
+    it('A project with 2 to-do items and 1 progress item, upon placing the progress item between the to-do items, arranges it as the new 2nd to-do item', () => {
+      project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.TODO)
+      );
+      const item2 = project.add(
+        new ItemTitle('Test Item 2'),
+        new Description('This is Test Item 2'),
+        new Status(Category.TODO)
+      );
+      const item3 = project.add(
+        new ItemTitle('Test Item 3'),
+        new Description('This is Test Item 3'),
+        new Status(Category.PROGRESS)
+      );
+      project.arrange(item3, item2);
+      expect(project.items.toDoItems().items()[1]).toEqual(item3);
+    });
+
+    it('A project with 3 to-do items, upon placing the 1st to-do item after the last one, arranges it as the new 3rd to-do item', () => {
       const item1 = project.add(
         new ItemTitle('Test Item 1'),
         new Description('This is Test Item 1'),
@@ -584,10 +603,170 @@ describe('Project', () => {
       const item3 = project.add(
         new ItemTitle('Test Item 3'),
         new Description('This is Test Item 3'),
+        new Status(Category.TODO)
+      );
+      project.arrange(item1, item3);
+      expect(project.items.toDoItems().items()[2]).toEqual(item1);
+    });
+
+    it('A project with 3 progress items, upon placing the 1st progress item after the last one, arranges it as the new 3rd progress item', () => {
+      const item1 = project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
         new Status(Category.PROGRESS)
       );
-      project.arrange(item3, item1, Utils.buildPosition(Position.AFTER));
+      project.add(
+        new ItemTitle('Test Item 2'),
+        new Description('This is Test Item 2'),
+        new Status(Category.PROGRESS)
+      );
+      const item3 = project.add(
+        new ItemTitle('Test Item 3'),
+        new Description('This is Test Item 3'),
+        new Status(Category.PROGRESS)
+      );
+      project.arrange(item1, item3);
+      expect(project.items.progressItems().items()[2]).toEqual(item1);
+    });
+
+    it('A project with 3 complete items, upon placing the 1st complete item after the last one, arranges it as the new 3rd complete item', () => {
+      const item1 = project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.COMPLETED)
+      );
+      project.add(
+        new ItemTitle('Test Item 2'),
+        new Description('This is Test Item 2'),
+        new Status(Category.COMPLETED)
+      );
+      const item3 = project.add(
+        new ItemTitle('Test Item 3'),
+        new Description('This is Test Item 3'),
+        new Status(Category.COMPLETED)
+      );
+      project.arrange(item1, item3);
+      expect(project.items.completeItems().items()[2]).toEqual(item1);
+    });
+
+    it('A project with 3 to-do items, upon placing the 3rd to-do item before the 2nd one, arranges it as the new 2nd to-do item', () => {
+      project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.TODO)
+      );
+      const item2 = project.add(
+        new ItemTitle('Test Item 2'),
+        new Description('This is Test Item 2'),
+        new Status(Category.TODO)
+      );
+      const item3 = project.add(
+        new ItemTitle('Test Item 3'),
+        new Description('This is Test Item 3'),
+        new Status(Category.TODO)
+      );
+      project.arrange(item3, item2);
       expect(project.items.toDoItems().items()[1]).toEqual(item3);
+    });
+
+    it('A project with 3 progress items, upon placing the 3rd progress item before the 2nd one, arranges it as the new 2nd progress item', () => {
+      project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.PROGRESS)
+      );
+      const item2 = project.add(
+        new ItemTitle('Test Item 2'),
+        new Description('This is Test Item 2'),
+        new Status(Category.PROGRESS)
+      );
+      const item3 = project.add(
+        new ItemTitle('Test Item 3'),
+        new Description('This is Test Item 3'),
+        new Status(Category.PROGRESS)
+      );
+      project.arrange(item3, item2);
+      expect(project.items.progressItems().items()[1]).toEqual(item3);
+    });
+
+    it('A project with 3 complete items, upon placing the 3rd complete item before the 2nd one, arranges it as the new 2nd complete item', () => {
+      project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.COMPLETED)
+      );
+      const item2 = project.add(
+        new ItemTitle('Test Item 2'),
+        new Description('This is Test Item 2'),
+        new Status(Category.COMPLETED)
+      );
+      const item3 = project.add(
+        new ItemTitle('Test Item 3'),
+        new Description('This is Test Item 3'),
+        new Status(Category.COMPLETED)
+      );
+      project.arrange(item3, item2);
+      expect(project.items.completeItems().items()[1]).toEqual(item3);
+    });
+
+    it('A project with 3 to-do items, upon placing the 1st to-do item after the 2nd one, arranges it as the new 2nd to-do item', () => {
+      const item1 = project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.TODO)
+      );
+      const item2 = project.add(
+        new ItemTitle('Test Item 2'),
+        new Description('This is Test Item 2'),
+        new Status(Category.TODO)
+      );
+      project.add(
+        new ItemTitle('Test Item 3'),
+        new Description('This is Test Item 3'),
+        new Status(Category.TODO)
+      );
+      project.arrange(item1, item2);
+      expect(project.items.toDoItems().items()[1]).toEqual(item1);
+    });
+
+    it('A project with 3 progress items, upon placing the 1st progress item after the 2nd one, arranges it as the new 2nd progress item', () => {
+      const item1 = project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.PROGRESS)
+      );
+      const item2 = project.add(
+        new ItemTitle('Test Item 2'),
+        new Description('This is Test Item 2'),
+        new Status(Category.PROGRESS)
+      );
+      project.add(
+        new ItemTitle('Test Item 3'),
+        new Description('This is Test Item 3'),
+        new Status(Category.PROGRESS)
+      );
+      project.arrange(item1, item2);
+      expect(project.items.progressItems().items()[1]).toEqual(item1);
+    });
+
+    it('A project with 3 complete items, upon placing the 1st complete item after the 2nd one, arranges it as the new 2nd complete item', () => {
+      const item1 = project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.COMPLETED)
+      );
+      const item2 = project.add(
+        new ItemTitle('Test Item 2'),
+        new Description('This is Test Item 2'),
+        new Status(Category.COMPLETED)
+      );
+      project.add(
+        new ItemTitle('Test Item 3'),
+        new Description('This is Test Item 3'),
+        new Status(Category.COMPLETED)
+      );
+      project.arrange(item1, item2);
+      expect(project.items.completeItems().items()[1]).toEqual(item1);
     });
   });
 });

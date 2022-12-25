@@ -1,4 +1,3 @@
-import { Position } from '../utils';
 import { Description } from './description';
 import { Item } from './item';
 import { ItemTitle } from './itemTitle';
@@ -95,7 +94,7 @@ export class ItemsList {
     }
   }
 
-  arrange(itemMoved: Item, itemToBeMovedTo: Item, position: Position) {
+  arrange(itemMoved: Item, itemToBeMovedTo: Item) {
     if (!itemMoved.status.equals(itemToBeMovedTo.status)) {
       this._items[itemToBeMovedTo.status.category].push(itemMoved);
       this.delete(itemMoved);
@@ -108,16 +107,10 @@ export class ItemsList {
     const itemIndex = this.findItemIndex(itemMoved);
     const secondItemIndex = this.findItemIndex(itemToBeMovedTo);
     const items = this._items[itemToBeMovedTo.status.category];
-    let newItemIndex = 0;
-    if (position === Position.BEFORE) {
-      newItemIndex = secondItemIndex;
-    } else if (position === Position.AFTER) {
-      newItemIndex = secondItemIndex + 1;
-    }
-    const increment = newItemIndex < itemIndex ? -1 : 1;
-    for (let j = itemIndex; j !== newItemIndex; j += increment) {
+    const increment = secondItemIndex < itemIndex ? -1 : 1;
+    for (let j = itemIndex; j !== secondItemIndex; j += increment) {
       items[j] = items[j + increment];
     }
-    items[newItemIndex] = itemMoved;
+    items[secondItemIndex] = itemMoved;
   }
 }
