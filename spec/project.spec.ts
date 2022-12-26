@@ -768,5 +768,80 @@ describe('Project', () => {
       project.arrange(item1, new Status(Category.COMPLETED), item2);
       expect(project.items.completeItems().items()[1]).toEqual(item1);
     });
+
+    it('A project with 1 to-do item, upon placing it in the progress list, arranges it as the 1st progress item', () => {
+      const item1 = project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.TODO)
+      );
+      project.arrange(item1, new Status(Category.PROGRESS));
+      expect(project.items.progressItems().items()[0]).toEqual(item1);
+    });
+
+    it('A project with 1 to-do item, upon placing it in the complete list, arranges it as the 1st complete item', () => {
+      const item1 = project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.TODO)
+      );
+      project.arrange(item1, new Status(Category.COMPLETED));
+      expect(project.items.completeItems().items()[0]).toEqual(item1);
+    });
+
+    it('A project with 1 progress item, upon placing it in the to-do list, arranges it as the 1st to-do item', () => {
+      const item1 = project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.PROGRESS)
+      );
+      project.arrange(item1, new Status(Category.TODO));
+      expect(project.items.toDoItems().items()[0]).toEqual(item1);
+    });
+
+    it('A project with 1 to-do item and 1 progress item, upon placing the to-do item at the end of the progress list, arranges it as the 2nd progress item', () => {
+      const item1 = project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.TODO)
+      );
+      project.add(
+        new ItemTitle('Test Item 2'),
+        new Description('This is Test Item 2'),
+        new Status(Category.PROGRESS)
+      );
+      project.arrange(item1, new Status(Category.PROGRESS));
+      expect(project.items.progressItems().items()[1]).toEqual(item1);
+    });
+
+    it('A project with 1 to-do item and 1 complete item, upon placing the to-do item at the end of the complete list, arranges it as the 2nd complete item', () => {
+      const item1 = project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.TODO)
+      );
+      project.add(
+        new ItemTitle('Test Item 2'),
+        new Description('This is Test Item 2'),
+        new Status(Category.COMPLETED)
+      );
+      project.arrange(item1, new Status(Category.COMPLETED));
+      expect(project.items.completeItems().items()[1]).toEqual(item1);
+    });
+
+    it('A project with 1 progress item and 1 to-do item, upon placing the progress item at the end of the to-do list, arranges it as the 2nd to-do item', () => {
+      const item1 = project.add(
+        new ItemTitle('Test Item 1'),
+        new Description('This is Test Item 1'),
+        new Status(Category.PROGRESS)
+      );
+      project.add(
+        new ItemTitle('Test Item 2'),
+        new Description('This is Test Item 2'),
+        new Status(Category.TODO)
+      );
+      project.arrange(item1, new Status(Category.TODO));
+      expect(project.items.toDoItems().items()[1]).toEqual(item1);
+    });
   });
 });
