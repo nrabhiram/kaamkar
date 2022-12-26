@@ -12,12 +12,91 @@ export class ProjectView extends PageView {
   private addItemForm: string;
   private editItemForm: string;
   private deleteItemModal: string;
-
   private static addedHandlers = false;
-  private static selectedItemTitle = '';
-  private static selectedItemDescription = '';
-  private static selectedItemStatus = Category.TODO;
-  private static selectedItemId = 0;
+  private static itemsContainerEle: any;
+  private static adjacentItemEle: any;
+  private static selectedItem = {
+    title: '',
+    description: '',
+    status: Category.TODO,
+    id: -1
+  };
+  private static adjacentItem = {
+    title: '',
+    description: '',
+    status: Category.TODO,
+    id: -1
+  };
+  private static selectedItemContainerCategory = Category.TODO;
+
+  private static getDragAfterElement(container: any, y: number) {
+    const draggableElements = [
+      ...container.querySelectorAll('.draggable:not(.dragging)')
+    ];
+    return draggableElements.reduce(
+      (closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child };
+        } else {
+          return closest;
+        }
+      },
+      { offset: Number.NEGATIVE_INFINITY }
+    ).element;
+  }
+
+  private static buildItem(
+    element: any,
+    itemObject: {
+      title: string;
+      description: string;
+      status: Category;
+      id: number;
+    }
+  ) {
+    let itemDescriptionElement;
+    if (element.querySelector('.full-item-description')) {
+      itemDescriptionElement = element.querySelector('.full-item-description');
+    } else if (element.querySelector('.truncated-item-description')) {
+      itemDescriptionElement = element.querySelector(
+        '.truncated-item-description'
+      );
+    }
+    const itemTitle = element.querySelector('.item-title').innerText;
+    const itemDescription = itemDescriptionElement.innerText;
+    const itemContainerId = element.parentElement.id;
+    itemObject['id'] = +element.id.split('-')[1];
+    itemObject['title'] = itemTitle;
+    itemObject['description'] = itemDescription;
+    itemObject['status'] = this.itemContainerStatus(itemContainerId);
+  }
+
+  private static clearItem(itemObject: {
+    title: string;
+    description: string;
+    status: Category;
+    id: number;
+  }) {
+    itemObject['id'] = -1;
+    itemObject['title'] = '';
+    itemObject['description'] = '';
+    itemObject['status'] = Category.TODO;
+  }
+
+  private static itemContainerStatus(itemContainerId?: string) {
+    switch (itemContainerId) {
+      case 'to-do-items-container':
+        return Category.TODO;
+      case 'progress-items-container':
+        return Category.PROGRESS;
+      case 'complete-items-container':
+        return Category.COMPLETED;
+      default:
+        return Category.TODO;
+    }
+  }
 
   constructor() {
     super();
@@ -150,31 +229,16 @@ export class ProjectView extends PageView {
         );
         if (editItemButton || deleteItemButton) {
           const itemElement = e.target.closest('.item-card');
-          let itemDescriptionElement;
-          if (itemElement.querySelector('.full-item-description')) {
-            itemDescriptionElement = itemElement.querySelector(
-              '.full-item-description'
-            );
-          } else if (itemElement.querySelector('.truncated-item-description')) {
-            itemDescriptionElement = itemElement.querySelector(
-              '.truncated-item-description'
-            );
+          if (itemElement) {
+            ProjectView.buildItem(itemElement, ProjectView.selectedItem);
           }
-          const itemTitle = itemElement.querySelector('.item-title').innerText;
-          const itemDescription = itemDescriptionElement.innerText;
-          const itemContainerId = itemElement.parentElement.id;
-          ProjectView.selectedItemId = +itemElement.id.split('-')[1];
-          ProjectView.selectedItemTitle = itemTitle;
-          ProjectView.selectedItemDescription = itemDescription;
-          ProjectView.selectedItemStatus =
-            this.itemContainerStatus(itemContainerId);
         }
         if (addItemButton) {
           this.renderAddItemForm();
         } else if (editItemButton) {
           this.renderEditItemForm(
-            ProjectView.selectedItemTitle,
-            ProjectView.selectedItemDescription
+            ProjectView.selectedItem['title'],
+            ProjectView.selectedItem['description']
           );
         } else if (deleteItemButton) {
           this.renderDeleteItemModal();
@@ -238,20 +302,50 @@ export class ProjectView extends PageView {
           );
         }
       });
+      document.addEventListener('dragstart', (e: any) => {
+        const itemCard = e.target.matches('.item-card');
+        if (itemCard) {
+          e.target.classList.add('dragging');
+          const itemElement = e.target;
+          ProjectView.buildItem(itemElement, ProjectView.selectedItem);
+          ProjectView.clearItem(ProjectView.adjacentItem);
+        }
+      });
+      document.addEventListener('dragover', (e: any) => {
+        e.preventDefault();
+        const itemsListContainer = e.target.matches(
+          '.items-list-container, .items-list-container *'
+        );
+        if (itemsListContainer) {
+          const itemsListContainerEle = e.target.closest(
+            '.items-list-container'
+          );
+          const dragging = document.querySelector('.dragging');
+          ProjectView.itemsContainerEle =
+            itemsListContainerEle?.querySelector('.items-container');
+          if (ProjectView.itemsContainerEle) {
+            ProjectView.selectedItemContainerCategory =
+              ProjectView.itemContainerStatus(ProjectView.itemsContainerEle.id);
+          }
+          ProjectView.adjacentItemEle = ProjectView.getDragAfterElement(
+            ProjectView.itemsContainerEle,
+            e.clientY
+          );
+          if (ProjectView.adjacentItemEle != null) {
+            ProjectView.buildItem(
+              ProjectView.adjacentItemEle,
+              ProjectView.adjacentItem
+            );
+            ProjectView.itemsContainerEle?.insertBefore(
+              dragging,
+              ProjectView.adjacentItemEle
+            );
+          } else {
+            ProjectView.itemsContainerEle?.appendChild(dragging);
+          }
+        }
+      });
       ProjectView.addedHandlers = true;
-    }
-  }
-
-  private itemContainerStatus(itemContainerId?: string) {
-    switch (itemContainerId) {
-      case 'to-do-items-container':
-        return Category.TODO;
-      case 'progress-items-container':
-        return Category.PROGRESS;
-      case 'complete-items-container':
-        return Category.COMPLETED;
-      default:
-        return Category.TODO;
     }
   }
 
@@ -328,9 +422,9 @@ export class ProjectView extends PageView {
                             </svg>              
                             <span class="items-list-to-do-title">To-do</span>
                         </div>
-                        <div id="to-do-items-container">${toDoItems.map(
-                          this.renderItem
-                        )}</div>
+                        <div class="items-container" id="to-do-items-container">${toDoItems
+                          .map(this.renderItem)
+                          .join('')}</div>
                     </div>
                     <div class="items-list-container">
                         <div class="items-list-title-container">
@@ -340,9 +434,9 @@ export class ProjectView extends PageView {
                             </svg>              
                             <span class="items-list-progress-title">In Progress</span>
                         </div>
-                        <div id="progress-items-container">${progressItems.map(
-                          this.renderItem
-                        )}</div>
+                        <div class="items-container" id="progress-items-container">${progressItems
+                          .map(this.renderItem)
+                          .join('')}</div>
                     </div>
                     <div class="items-list-container">
                         <div class="items-list-title-container">
@@ -351,9 +445,9 @@ export class ProjectView extends PageView {
                             </svg>
                             <span class="items-list-completed-title">Completed</span>
                         </div>
-                        <div id="complete-items-container">${completeItems.map(
-                          this.renderItem
-                        )}</div>
+                        <div class="items-container" id="complete-items-container">${completeItems
+                          .map(this.renderItem)
+                          .join('')}</div>
                     </div>
                 </div>
             </div>
@@ -385,7 +479,7 @@ export class ProjectView extends PageView {
       truncatedHTML = '';
     }
     return `
-        <div class="item-card" id=item-${item.id}>
+        <div class="item-card draggable" draggable="true" id=item-${item.id}>
             <h5 class="item-title">${item.title}</h5>
             <p class="item-description truncated-item-description">
                 ${truncatedDescription}
@@ -436,7 +530,7 @@ export class ProjectView extends PageView {
     );
     if (statusInputElement) {
       statusInputElement.innerHTML = this.renderItemStatusBtn(
-        ProjectView.selectedItemStatus
+        ProjectView.selectedItem['status']
       );
     }
   }
@@ -521,14 +615,14 @@ export class ProjectView extends PageView {
 
   edit() {
     const itemHTML = document.getElementById(
-      `item-${ProjectView.selectedItemId}`
+      `item-${ProjectView.selectedItem['id']}`
     );
     const itemContainerId = itemHTML?.parentElement?.id;
-    const itemCurrentStatus = this.itemContainerStatus(itemContainerId);
+    const itemCurrentStatus = ProjectView.itemContainerStatus(itemContainerId);
     const itemTitle = this.editTitleInput();
     const itemDescription = this.editDescriptionInput();
     const itemStatus = this.editStatusInput();
-    const itemId = ProjectView.selectedItemId;
+    const itemId = ProjectView.selectedItem['id'];
     const newItemHTML = this.renderItem({
       title: itemTitle,
       description: itemDescription,
@@ -565,8 +659,15 @@ export class ProjectView extends PageView {
     this.removeEditItemForm();
   }
 
+  arrange() {
+    const dragging = document.querySelector('.dragging');
+    dragging?.classList.remove('dragging');
+    ProjectView.clearItem(ProjectView.selectedItem);
+    ProjectView.clearItem(ProjectView.adjacentItem);
+  }
+
   delete() {
-    document.getElementById(`item-${ProjectView.selectedItemId}`)?.remove();
+    document.getElementById(`item-${ProjectView.selectedItem['id']}`)?.remove();
     this.removeDeleteItemModal();
   }
 
@@ -602,11 +703,14 @@ export class ProjectView extends PageView {
   }
 
   selectedItem() {
-    return {
-      title: ProjectView.selectedItemTitle,
-      description: ProjectView.selectedItemDescription,
-      status: ProjectView.selectedItemStatus,
-      id: ProjectView.selectedItemId
-    };
+    return ProjectView.selectedItem;
+  }
+
+  adjacentItem() {
+    return ProjectView.adjacentItem;
+  }
+
+  selectedItemContainerCategory() {
+    return ProjectView.selectedItemContainerCategory;
   }
 }

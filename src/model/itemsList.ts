@@ -37,7 +37,7 @@ export class ItemsList {
         return i;
       }
     }
-    return 0;
+    return -1;
   }
 
   items() {
@@ -94,23 +94,25 @@ export class ItemsList {
     }
   }
 
-  arrange(itemMoved: Item, itemToBeMovedTo: Item) {
-    if (!itemMoved.status.equals(itemToBeMovedTo.status)) {
-      this._items[itemToBeMovedTo.status.category].push(itemMoved);
+  arrange(itemMoved: Item, status: Status, itemToBeMovedTo?: Item) {
+    if (!itemMoved.status.equals(status)) {
+      this._items[status.category].push(itemMoved);
       this.delete(itemMoved);
-      itemMoved.update(
-        itemMoved.title,
-        itemMoved.description,
-        itemToBeMovedTo.status
-      );
+      itemMoved.update(itemMoved.title, itemMoved.description, status);
     }
-    const itemIndex = this.findItemIndex(itemMoved);
-    const secondItemIndex = this.findItemIndex(itemToBeMovedTo);
-    const items = this._items[itemToBeMovedTo.status.category];
-    const increment = secondItemIndex < itemIndex ? -1 : 1;
-    for (let j = itemIndex; j !== secondItemIndex; j += increment) {
-      items[j] = items[j + increment];
+    if (itemToBeMovedTo) {
+      if (itemToBeMovedTo.status.equals(status)) {
+        const itemIndex = this.findItemIndex(itemMoved);
+        const secondItemIndex = this.findItemIndex(itemToBeMovedTo);
+        if (itemIndex !== -1 && secondItemIndex !== -1) {
+          const items = this._items[itemToBeMovedTo.status.category];
+          const increment = secondItemIndex < itemIndex ? -1 : 1;
+          for (let j = itemIndex; j !== secondItemIndex; j += increment) {
+            items[j] = items[j + increment];
+          }
+          items[secondItemIndex] = itemMoved;
+        }
+      }
     }
-    items[secondItemIndex] = itemMoved;
   }
 }

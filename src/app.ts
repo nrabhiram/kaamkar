@@ -87,3 +87,13 @@ document.addEventListener('click', (e: any) => {
     new Router().route();
   }
 });
+
+document.addEventListener('dragend', (e: any) => {
+  const itemCard = e.target.matches('.item-card');
+  if (itemCard) {
+    const project = state.project();
+    if (project) {
+      new ProjectController(project).arrange();
+    }
+  }
+});

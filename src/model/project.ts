@@ -67,8 +67,8 @@ export class Project {
     this.items.edit(item, title, description, status);
   }
 
-  arrange(itemMoved: Item, itemToBeMovedTo: Item) {
-    this.items.arrange(itemMoved, itemToBeMovedTo);
+  arrange(itemMoved: Item, status: Status, itemToBeMovedTo?: Item) {
+    this.items.arrange(itemMoved, status, itemToBeMovedTo);
   }
 
   update(title: ProjectTitle, description: Description) {

@@ -39,7 +39,9 @@ export class ProjectController extends Controller {
     const itemTitle = parser.itemTitle(titleInput);
     const itemDescription = parser.description(descriptionInput);
     const itemStatus = parser.status(statusInput);
-    this.project.edit(item, itemTitle, itemDescription, itemStatus);
+    if (item) {
+      this.project.edit(item, itemTitle, itemDescription, itemStatus);
+    }
     this.write();
     view.edit();
   }
@@ -49,8 +51,33 @@ export class ProjectController extends Controller {
     const parser = new Parser();
     const itemInput = view.selectedItem();
     const item = parser.item(itemInput);
-    this.project.delete(item);
+    if (item) {
+      this.project.delete(item);
+    }
     this.write();
     view.delete();
+  }
+
+  arrange() {
+    const view = new ProjectView();
+    const parser = new Parser();
+    const selectedItemInput = view.selectedItem();
+    const adjacentItemInput = view.adjacentItem();
+    const selectedItemContainerStatusInput =
+      view.selectedItemContainerCategory();
+    const selectedItem = parser.item(selectedItemInput);
+    const adjacentItem = parser.item(adjacentItemInput);
+    const selectedItemContainerStatus = parser.status(
+      selectedItemContainerStatusInput
+    );
+    if (selectedItem) {
+      this.project.arrange(
+        selectedItem,
+        selectedItemContainerStatus,
+        adjacentItem
+      );
+    }
+    this.write();
+    view.arrange();
   }
 }

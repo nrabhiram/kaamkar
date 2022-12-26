@@ -495,7 +495,7 @@ describe('Project', () => {
         new Description('This is Test Item 2'),
         new Status(Category.TODO)
       );
-      project.arrange(item2, item1);
+      project.arrange(item2, new Status(Category.TODO), item1);
       expect(project.items.toDoItems().items()[0]).toEqual(item2);
     });
 
@@ -510,7 +510,7 @@ describe('Project', () => {
         new Description('This is Test Item 2'),
         new Status(Category.PROGRESS)
       );
-      project.arrange(item2, item1);
+      project.arrange(item2, new Status(Category.PROGRESS), item1);
       expect(project.items.progressItems().items()[0]).toEqual(item2);
     });
 
@@ -525,7 +525,7 @@ describe('Project', () => {
         new Description('This is Test Item 2'),
         new Status(Category.COMPLETED)
       );
-      project.arrange(item2, item1);
+      project.arrange(item2, new Status(Category.COMPLETED), item1);
       expect(project.items.completeItems().items()[0]).toEqual(item2);
     });
 
@@ -545,7 +545,7 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.TODO)
       );
-      project.arrange(item3, item2);
+      project.arrange(item3, new Status(Category.COMPLETED), item2);
       expect(project.items.completeItems().items()[1]).toEqual(item3);
     });
 
@@ -565,7 +565,7 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.TODO)
       );
-      project.arrange(item3, item2);
+      project.arrange(item3, new Status(Category.PROGRESS), item2);
       expect(project.items.progressItems().items()[1]).toEqual(item3);
     });
 
@@ -585,7 +585,7 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.PROGRESS)
       );
-      project.arrange(item3, item2);
+      project.arrange(item3, new Status(Category.TODO), item2);
       expect(project.items.toDoItems().items()[1]).toEqual(item3);
     });
 
@@ -605,7 +605,7 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.TODO)
       );
-      project.arrange(item1, item3);
+      project.arrange(item1, new Status(Category.TODO), item3);
       expect(project.items.toDoItems().items()[2]).toEqual(item1);
     });
 
@@ -625,7 +625,7 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.PROGRESS)
       );
-      project.arrange(item1, item3);
+      project.arrange(item1, new Status(Category.PROGRESS), item3);
       expect(project.items.progressItems().items()[2]).toEqual(item1);
     });
 
@@ -645,7 +645,7 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.COMPLETED)
       );
-      project.arrange(item1, item3);
+      project.arrange(item1, new Status(Category.COMPLETED), item3);
       expect(project.items.completeItems().items()[2]).toEqual(item1);
     });
 
@@ -665,7 +665,7 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.TODO)
       );
-      project.arrange(item3, item2);
+      project.arrange(item3, new Status(Category.TODO), item2);
       expect(project.items.toDoItems().items()[1]).toEqual(item3);
     });
 
@@ -685,7 +685,7 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.PROGRESS)
       );
-      project.arrange(item3, item2);
+      project.arrange(item3, new Status(Category.PROGRESS), item2);
       expect(project.items.progressItems().items()[1]).toEqual(item3);
     });
 
@@ -705,7 +705,7 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.COMPLETED)
       );
-      project.arrange(item3, item2);
+      project.arrange(item3, new Status(Category.COMPLETED), item2);
       expect(project.items.completeItems().items()[1]).toEqual(item3);
     });
 
@@ -725,7 +725,7 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.TODO)
       );
-      project.arrange(item1, item2);
+      project.arrange(item1, new Status(Category.TODO), item2);
       expect(project.items.toDoItems().items()[1]).toEqual(item1);
     });
 
@@ -745,7 +745,7 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.PROGRESS)
       );
-      project.arrange(item1, item2);
+      project.arrange(item1, new Status(Category.PROGRESS), item2);
       expect(project.items.progressItems().items()[1]).toEqual(item1);
     });
 
@@ -765,7 +765,7 @@ describe('Project', () => {
         new Description('This is Test Item 3'),
         new Status(Category.COMPLETED)
       );
-      project.arrange(item1, item2);
+      project.arrange(item1, new Status(Category.COMPLETED), item2);
       expect(project.items.completeItems().items()[1]).toEqual(item1);
     });
   });

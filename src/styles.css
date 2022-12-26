@@ -457,3 +457,7 @@
 .dropdown-ease-in {
     @apply transform opacity-100 scale-100;
 }
+
+.dragging {
+    @apply opacity-50;
+}
