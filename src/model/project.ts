@@ -37,8 +37,8 @@ export class Project {
 
   progress(this: Project) {
     const completeItems = this.items.completeItems();
-    const numCompleteItems = completeItems.items.length;
-    const numTotalItems = this.items.items.length;
+    const numCompleteItems = completeItems.items().length;
+    const numTotalItems = this.items.items().length;
     let percentage: number;
 
     if (!numTotalItems) {
@@ -65,6 +65,10 @@ export class Project {
 
   edit(item: Item, title: ItemTitle, description: Description, status: Status) {
     this.items.edit(item, title, description, status);
+  }
+
+  arrange(itemMoved: Item, status: Status, itemToBeMovedTo?: Item) {
+    this.items.arrange(itemMoved, status, itemToBeMovedTo);
   }
 
   update(title: ProjectTitle, description: Description) {

@@ -84,8 +84,8 @@ export class Renderer {
       status: Category;
       id: number;
     }[] = [];
-    for (let i = 0; i < items.items.length; i++) {
-      const renderedItem = this.item(items.items[i]);
+    for (let i = 0; i < items.items().length; i++) {
+      const renderedItem = this.item(items.items()[i]);
       renderedItems.push(renderedItem);
     }
     return renderedItems;

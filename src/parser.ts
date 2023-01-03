@@ -39,12 +39,16 @@ export class Parser {
     status: Category;
     id: number;
   }) {
-    return new Item(
-      new ItemTitle(item.title),
-      new Description(item.description),
-      new Status(item.status),
-      item.id
-    );
+    if (item.id !== -1) {
+      return new Item(
+        new ItemTitle(item.title),
+        new Description(item.description),
+        new Status(item.status),
+        item.id
+      );
+    } else {
+      return;
+    }
   }
 
   projectsList(

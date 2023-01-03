@@ -240,7 +240,7 @@
 }
 
 .item-card {
-    @apply transition ease-in-out block p-6 rounded-lg shadow-lg bg-dark-200 w-full my-2 cursor-pointer hover:bg-dark-50 duration-300;
+    @apply transition ease-in-out block p-6 rounded-lg shadow-lg bg-dark-200 w-full cursor-pointer hover:bg-dark-50 duration-300;
 }
 
 .item-title {
@@ -456,4 +456,28 @@
 
 .dropdown-ease-in {
     @apply transform opacity-100 scale-100;
+}
+
+.dragging {
+    @apply opacity-50;
+}
+
+.drop-zone {
+    @apply transition-opacity ease-in-out duration-100 h-4 w-full bg-blue-600 block;
+}
+
+.drop-zone-inactive {
+    @apply opacity-0;
+}
+
+.drop-zone-active {
+    @apply opacity-50;
+}
+
+.input-container {
+    @apply my-2;
+}
+
+.item-option-spacing {
+    @apply mr-2;
 }
