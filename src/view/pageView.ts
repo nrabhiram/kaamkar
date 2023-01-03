@@ -153,8 +153,8 @@ export abstract class PageView {
     }
   }
 
-  protected toggleDropdown(menuId: string) {
-    const menu = document.getElementById(menuId);
+  protected toggleDropdown() {
+    const menu = document.getElementById('item-status-menu-option');
     if (menu?.classList.contains('dropdown')) {
       menu?.classList.toggle('dropdown');
       setTimeout(() => {

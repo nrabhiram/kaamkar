@@ -1,24 +1,25 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="app" id="app">
-      <div class="mesh-gradient-container">
-        <div class="mesh-1"></div>
-        <div class="mesh-2"></div>
-        <div class="mesh-3"></div>
-      </div>
+import { Router } from '../router';
+import { PageView } from '../view/pageView';
+import { Component } from './component';
+
+export class NavBar extends Component<HTMLElement, Element, PageView> {
+  constructor(view: PageView) {
+    super('app', view);
+    this.templateString = this.navBarHTML();
+    this.element = this.createElement(this.templateString);
+    this.attach(false);
+    this.configure();
+  }
+
+  navBarHTML() {
+    return `
       <nav class="nav">
-        <div class="nav-title">
+        <a href="/" class="nav-title internal-nav-link">
           <svg class="nav-logo" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
             <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/>
           </svg>
-          <span class="nav-title">kaamkar</span>
-        </div>
+          <span class="nav-title-text">kaamkar</span>
+        </a>
         <div class="nav-toggle-container">
           <button class="nav-toggle-btn">
             <svg class="nav-toggle-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
@@ -26,10 +27,10 @@
         </div>
         <div class="nav-sub-container">
           <div class="nav-links-container">
-            <a href="#" class="nav-link">
+            <a href="/projects" class="nav-link internal-nav-link">
               Projects
             </a>
-            <a href="#responsive-header" class="nav-link">
+            <a class="nav-link" href="https://nrabhiram.xyz/" target="_blank">
               Blog
             </a>
           </div>
@@ -41,11 +42,25 @@
           </a>
         </div>  
       </nav>
-      <div class="grow"></div>
-      <div class="footer">
-        <p>Made by <a href="https://twitter.com/nrabhiram" target="_blank" class="footer-link">Abhiram Reddy</a></p> 
-        <p>With vanilla TypeScript, Tailwind, and Webpack</p>
-      </div>
-    </div>
-  </body>
-</html>
+    `;
+  }
+
+  configure() {
+    (this.element as HTMLElement).addEventListener(
+      'click',
+      this.linkClickHandler
+    );
+  }
+
+  private linkClickHandler(e: MouseEvent) {
+    const navLink = (e.target as HTMLElement).matches(
+      '.internal-nav-link, .internal-nav-link *'
+    );
+    if (navLink) {
+      e.preventDefault();
+      const link = (e.target as HTMLElement).closest('.internal-nav-link');
+      history.pushState(null, '', (link as HTMLAnchorElement).href);
+      new Router().route();
+    }
+  }
+}

@@ -86,31 +86,33 @@ export class ItemsList {
     for (let i = 0; i < items.length; i++) {
       if (item.id === items[i].id) {
         if (item.status.category !== status.category) {
-          this._items[status.category].push(item);
-          this.delete(item);
+          this._items[status.category].push(items[i]);
+          this.delete(items[i]);
         }
-        item.update(title, description, status);
+        items[i].update(title, description, status);
       }
     }
   }
 
   arrange(itemMoved: Item, status: Status, itemToBeMovedTo?: Item) {
-    if (!itemMoved.status.equals(status)) {
-      this._items[status.category].push(itemMoved);
-      this.delete(itemMoved);
-      itemMoved.update(itemMoved.title, itemMoved.description, status);
-    }
-    if (itemToBeMovedTo) {
-      if (itemToBeMovedTo.status.equals(status)) {
-        const itemIndex = this.findItemIndex(itemMoved);
+    const itemIndex = this.findItemIndex(itemMoved);
+    if (itemIndex !== -1) {
+      const item = this._items[itemMoved.status.category][itemIndex];
+      if (!item.status.equals(status)) {
+        this._items[status.category].push(item);
+        this.delete(item);
+        item.update(item.title, item.description, status);
+      }
+      if (itemToBeMovedTo) {
+        const firstItemIndex = this.findItemIndex(item);
         const secondItemIndex = this.findItemIndex(itemToBeMovedTo);
-        if (itemIndex !== -1 && secondItemIndex !== -1) {
-          const items = this._items[itemToBeMovedTo.status.category];
-          const increment = secondItemIndex < itemIndex ? -1 : 1;
-          for (let j = itemIndex; j !== secondItemIndex; j += increment) {
+        if (firstItemIndex !== -1 && secondItemIndex !== -1) {
+          const items = this._items[status.category];
+          const increment = secondItemIndex < firstItemIndex ? -1 : 1;
+          for (let j = firstItemIndex; j !== secondItemIndex; j += increment) {
             items[j] = items[j + increment];
           }
-          items[secondItemIndex] = itemMoved;
+          items[secondItemIndex] = item;
         }
       }
     }
