@@ -23,6 +23,15 @@ export class ProjectsList {
     }
   }
 
+  private findProjectIndex(project: Project) {
+    for (let i = 0; i < this.projects.length; i++) {
+      if (project.id === this.projects[i].id) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   add(title: ProjectTitle, description: Description) {
     const newProject = new Project(
       title,
@@ -50,6 +59,31 @@ export class ProjectsList {
       if (project.id === this.projects[i].id) {
         this.projects[i].update(title, description);
         return;
+      }
+    }
+  }
+
+  arrange(projectMoved: Project, projectToBeMovedTo?: Project) {
+    const firstProjectIndex = this.findProjectIndex(projectMoved);
+    if (firstProjectIndex !== -1) {
+      const project = this.projects[firstProjectIndex];
+      if (projectToBeMovedTo) {
+        const secondProjectIndex = this.findProjectIndex(projectToBeMovedTo);
+        if (firstProjectIndex !== -1 && secondProjectIndex !== -1) {
+          const increment = secondProjectIndex < firstProjectIndex ? -1 : 1;
+          for (
+            let j = firstProjectIndex;
+            j !== secondProjectIndex;
+            j += increment
+          ) {
+            this.projects[j] = this.projects[j + increment];
+          }
+          this.projects[secondProjectIndex] = project;
+        }
+      } else {
+        const project = this.projects[firstProjectIndex];
+        this.delete(project);
+        this.projects.push(project);
       }
     }
   }

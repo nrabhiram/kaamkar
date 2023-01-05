@@ -1,7 +1,7 @@
 import { Category } from '../model/status';
 import { ProjectView } from '../view/projectView';
 import { Component } from './component';
-import { DropZone } from './dropZone';
+import { ItemDropZone } from './itemDropZone';
 
 export class Project extends Component<HTMLElement, Element, ProjectView> {
   title: string;
@@ -13,19 +13,19 @@ export class Project extends Component<HTMLElement, Element, ProjectView> {
     this.element = this.createElement(this.templateString);
     this.attach(false);
     this.configure();
-    new DropZone('to-do-items-container', view, false, {
+    new ItemDropZone('to-do-items-container', view, false, {
       title: '',
       description: '',
       status: Category.TODO,
       id: -1
     });
-    new DropZone('progress-items-container', view, false, {
+    new ItemDropZone('progress-items-container', view, false, {
       title: '',
       description: '',
       status: Category.PROGRESS,
       id: -1
     });
-    new DropZone('complete-items-container', view, false, {
+    new ItemDropZone('complete-items-container', view, false, {
       title: '',
       description: '',
       status: Category.COMPLETED,

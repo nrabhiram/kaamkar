@@ -111,12 +111,12 @@
     @apply mr-2 -ml-1 w-6 h-6;
 }
 
-.project-container {
+/* .project-container {
     @apply flex flex-col justify-center items-center;
-}
+} */
 
 .project-card {
-    @apply transition ease-in-out block p-6 rounded-lg shadow-lg bg-dark-200 w-full my-2 cursor-pointer hover:bg-dark-50 duration-300;
+    @apply transition ease-in-out block p-6 rounded-lg shadow-lg bg-dark-200 w-full cursor-pointer hover:bg-dark-50 duration-300;
 }
 
 .project-title {
@@ -479,5 +479,9 @@
 }
 
 .item-option-spacing {
+    @apply mr-2;
+}
+
+.project-option-spacing {
     @apply mr-2;
 }

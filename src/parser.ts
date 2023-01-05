@@ -25,12 +25,16 @@ export class Parser {
   }
 
   project(project: { title: string; description: string; id: number }) {
-    return new Project(
-      new ProjectTitle(project.title),
-      new Description(project.description),
-      new ItemsList(),
-      project.id
-    );
+    if (project.id !== -1) {
+      return new Project(
+        new ProjectTitle(project.title),
+        new Description(project.description),
+        new ItemsList(),
+        project.id
+      );
+    } else {
+      return;
+    }
   }
 
   item(item: {

@@ -86,17 +86,16 @@ export class ProjectView extends PageView {
     );
   }
 
+  delete() {
+    ProjectView.selectedItemComponent.delete();
+  }
+
   arrange() {
     ProjectView.selectedItemComponent.arrange(
       ProjectView.droppedContainerEle,
       ProjectView.droppedContainerStatus,
       ProjectView.adjacentItemElement
     );
-  }
-
-  delete() {
-    document.getElementById(`item-${ProjectView.selectedItem['id']}`)?.remove();
-    ProjectView.selectedItemComponent.delete();
   }
 
   addTitleInput() {

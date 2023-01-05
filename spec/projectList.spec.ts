@@ -89,4 +89,82 @@ describe('Project List', () => {
       expect(project.description).toEqual(editedDescription);
     });
   });
+
+  describe('Project List Project Arrange', () => {
+    it('A project list with 1 project, upon adding a new project, arranges it as the 2nd project', () => {
+      projectsList.add(
+        new ProjectTitle('Test Project 1'),
+        new Description('This is the 1st Test Project')
+      );
+      const project2 = projectsList.add(
+        new ProjectTitle('Test Project 2'),
+        new Description('This is the 2nd Test Project')
+      );
+      expect(projectsList.projects[1]).toEqual(project2);
+    });
+
+    it('A project list with 2 projects, upon placing the the 2nd project above the 1st project, arranges it as the new 1st project', () => {
+      const project1 = projectsList.add(
+        new ProjectTitle('Test Project 1'),
+        new Description('This is the 1st Test Project')
+      );
+      const project2 = projectsList.add(
+        new ProjectTitle('Test Project 2'),
+        new Description('This is the 2nd Test Project')
+      );
+      projectsList.arrange(project2, project1);
+      expect(projectsList.projects[0]).toEqual(project2);
+    });
+
+    it('A project list with 3 projects, upon placing the 1st project after the last one, arranges it as the new 3rd project', () => {
+      const project1 = projectsList.add(
+        new ProjectTitle('Test Project 1'),
+        new Description('This is the 1st Test Project')
+      );
+      projectsList.add(
+        new ProjectTitle('Test Project 2'),
+        new Description('This is the 2nd Test Project')
+      );
+      projectsList.add(
+        new ProjectTitle('Test Project 3'),
+        new Description('This is the 3rd Test Project')
+      );
+      projectsList.arrange(project1);
+      expect(projectsList.projects[2]).toEqual(project1);
+    });
+
+    it('A project list with 3 projects, upon placing the 3rd project before the 2nd one, arranges it as the new 2nd project', () => {
+      projectsList.add(
+        new ProjectTitle('Test Project 1'),
+        new Description('This is the 1st Test Project')
+      );
+      const project2 = projectsList.add(
+        new ProjectTitle('Test Project 2'),
+        new Description('This is the 2nd Test Project')
+      );
+      const project3 = projectsList.add(
+        new ProjectTitle('Test Project 3'),
+        new Description('This is the 3rd Test Project')
+      );
+      projectsList.arrange(project3, project2);
+      expect(projectsList.projects[1]).toEqual(project3);
+    });
+
+    it('A project list with 3 projects, upon placing the 1st project after the 2nd one, arranges it as the new 2nd project', () => {
+      const project1 = projectsList.add(
+        new ProjectTitle('Test Project 1'),
+        new Description('This is the 1st Test Project')
+      );
+      const project2 = projectsList.add(
+        new ProjectTitle('Test Project 2'),
+        new Description('This is the 2nd Test Project')
+      );
+      projectsList.add(
+        new ProjectTitle('Test Project 3'),
+        new Description('This is the 3rd Test Project')
+      );
+      projectsList.arrange(project1, project2);
+      expect(projectsList.projects[1]).toEqual(project1);
+    });
+  });
 });

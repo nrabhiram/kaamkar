@@ -1,5 +1,4 @@
 import { Controller } from './controller/controller';
-import { ProjectsListController } from './controller/projectsListController';
 import { Router } from './router';
 import './styles.css';
 
@@ -17,10 +16,3 @@ export const state = {
 
 new Router().route();
 window.onpopstate = new Router().route;
-
-window.addEventListener('click', (e: any) => {
-  const addProjectBtn = e.target.matches('#add-project-form-submit-btn');
-  if (addProjectBtn) {
-    new ProjectsListController(state.projects).add();
-  }
-});
