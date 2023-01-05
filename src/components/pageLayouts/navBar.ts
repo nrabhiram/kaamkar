@@ -1,6 +1,6 @@
-import { Router } from '../router';
-import { PageView } from '../view/pageView';
-import { Component } from './component';
+import { Router } from '../../router';
+import { PageView } from '../../view/pageView';
+import { Component } from '../component';
 
 export class NavBar extends Component<HTMLElement, Element, PageView> {
   constructor(view: PageView) {
@@ -11,7 +11,7 @@ export class NavBar extends Component<HTMLElement, Element, PageView> {
     this.configure();
   }
 
-  navBarHTML() {
+  private navBarHTML() {
     return `
       <nav class="nav">
         <a href="/" class="nav-title internal-nav-link">

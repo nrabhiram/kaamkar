@@ -1,5 +1,5 @@
-import { Category } from '../model/status';
-import { ProjectView } from '../view/projectView';
+import { Category } from '../../model/status';
+import { ProjectView } from '../../view/projectView';
 import { Modal } from './modal';
 
 export class EditItemForm extends Modal {

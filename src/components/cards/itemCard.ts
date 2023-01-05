@@ -1,9 +1,9 @@
-import { Category } from '../model/status';
-import { ProjectView } from '../view/projectView';
-import { Component } from './component';
-import { ItemDropZone } from './itemDropZone';
+import { Category } from '../../model/status';
+import { ProjectView } from '../../view/projectView';
+import { Component } from '../component';
+import { ItemDropZone } from '../dropZones/itemDropZone';
 
-export class Item extends Component<HTMLElement, Element, ProjectView> {
+export class ItemCard extends Component<HTMLElement, Element, ProjectView> {
   item: {
     title: string;
     description: string;

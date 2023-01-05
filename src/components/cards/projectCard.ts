@@ -1,7 +1,7 @@
-import { Router } from '../router';
-import { ProjectsListView } from '../view/projectsListView';
-import { Component } from './component';
-import { ProjectDropZone } from './projectDropZone';
+import { Router } from '../../router';
+import { ProjectsListView } from '../../view/projectsListView';
+import { Component } from '../component';
+import { ProjectDropZone } from '../dropZones/projectDropZone';
 
 export class ProjectCard extends Component<
   HTMLElement,
@@ -156,16 +156,16 @@ export class ProjectCard extends Component<
   }
 
   private toggleDescription(e: MouseEvent) {
-    const itemElement = (e.target as HTMLElement).closest(
+    const projectElement = (e.target as HTMLElement).closest(
       '.project-card-container'
     );
-    const truncatedDescription = itemElement!.querySelector(
+    const truncatedDescription = projectElement!.querySelector(
       '.truncated-project-description'
     );
-    const fullDescription = itemElement!.querySelector(
+    const fullDescription = projectElement!.querySelector(
       '.full-project-description'
     );
-    const descriptionButton = itemElement!.querySelector('.read-btn');
+    const descriptionButton = projectElement!.querySelector('.read-btn');
     if (fullDescription!.classList.contains('collapsible')) {
       truncatedDescription!.classList.toggle('collapsible');
       fullDescription!.classList.toggle('collapsible');

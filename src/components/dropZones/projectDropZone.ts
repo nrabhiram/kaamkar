@@ -1,4 +1,4 @@
-import { ProjectsListView } from '../view/projectsListView';
+import { ProjectsListView } from '../../view/projectsListView';
 import { DropZone } from './dropZone';
 
 export class ProjectDropZone extends DropZone {

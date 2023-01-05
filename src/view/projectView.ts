@@ -1,15 +1,15 @@
 import { PageView } from './pageView';
 import { Category } from '../model/status';
-import { DeleteItemModal } from '../components/deleteItemModal';
-import { AddItemForm } from '../components/addItemForm';
-import { EditItemForm } from '../components/editItemForm';
-import { Project } from '../components/project';
-import { Item } from '../components/item';
+import { DeleteItemModal } from '../components/modals/deleteItemModal';
+import { AddItemForm } from '../components/modals/addItemForm';
+import { EditItemForm } from '../components/modals/editItemForm';
+import { Project } from '../components/pageLayouts/project';
+import { ItemCard } from '../components/cards/itemCard';
 import { ProjectController } from '../controller/projectController';
-import { Mesh } from '../components/mesh';
-import { NavBar } from '../components/navBar';
-import { Spacer } from '../components/spacer';
-import { Footer } from '../components/footer';
+import { Mesh } from '../components/pageLayouts/mesh';
+import { NavBar } from '../components/pageLayouts/navBar';
+import { Spacer } from '../components/pageLayouts/spacer';
+import { Footer } from '../components/pageLayouts/footer';
 
 type renderedItem = {
   title: string;
@@ -24,7 +24,7 @@ export class ProjectView extends PageView {
   private static newDescription: string;
   private static editedDescription: string;
   private static editedCategory: Category;
-  private static selectedItemComponent: Item;
+  private static selectedItemComponent: ItemCard;
   private static selectedItem: renderedItem;
   private static adjacentItemElement: Element | undefined;
   private static adjacentItem: renderedItem;
@@ -62,7 +62,7 @@ export class ProjectView extends PageView {
     const items = [...toDoItems, ...progressItems, ...completeItems];
     items.forEach((item) => {
       const itemContainerId = this.itemContainerId(item.status);
-      new Item(itemContainerId, this, item);
+      new ItemCard(itemContainerId, this, item);
     });
     new Spacer(this);
     new Footer(this);
@@ -75,7 +75,7 @@ export class ProjectView extends PageView {
     id: number;
   }) {
     const itemContainerId = this.itemContainerId(item.status);
-    new Item(itemContainerId, this, item);
+    new ItemCard(itemContainerId, this, item);
   }
 
   edit() {
@@ -135,14 +135,14 @@ export class ProjectView extends PageView {
     addItemForm.fadeIn();
   }
 
-  editItemFormBtnClicked(component: Item, item: renderedItem) {
+  editItemFormBtnClicked(component: ItemCard, item: renderedItem) {
     ProjectView.selectedItemComponent = component;
     ProjectView.selectedItem = item;
     const editItemForm = new EditItemForm(this);
     editItemForm.fadeIn(item.title, item.description, item.status);
   }
 
-  deleteItemFormBtnClicked(component: Item, item: renderedItem) {
+  deleteItemFormBtnClicked(component: ItemCard, item: renderedItem) {
     ProjectView.selectedItemComponent = component;
     ProjectView.selectedItem = item;
     const deleteItemModal = new DeleteItemModal(this);
@@ -166,7 +166,7 @@ export class ProjectView extends PageView {
     new ProjectController().delete();
   }
 
-  itemDragged(component: Item, item: renderedItem) {
+  itemDragged(component: ItemCard, item: renderedItem) {
     ProjectView.selectedItemComponent = component;
     ProjectView.selectedItem = item;
   }

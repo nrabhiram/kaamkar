@@ -1,6 +1,6 @@
-import { ProjectsListView } from '../view/projectsListView';
-import { Component } from './component';
-import { ProjectDropZone } from './projectDropZone';
+import { ProjectsListView } from '../../view/projectsListView';
+import { Component } from '../component';
+import { ProjectDropZone } from '../dropZones/projectDropZone';
 
 export class ProjectsList extends Component<
   HTMLElement,
@@ -16,7 +16,7 @@ export class ProjectsList extends Component<
     new ProjectDropZone('projects-container', view, false);
   }
 
-  projectsListHTML() {
+  private projectsListHTML() {
     return `
       <div class="app-body">
         <div class="app-head">
