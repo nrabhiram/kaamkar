@@ -1,29 +1,13 @@
-import { Category } from '../model/status';
 import { PageView } from '../view/pageView';
-import { ProjectView } from '../view/projectView';
 import { Component } from './component';
 
-export class DropZone extends Component<HTMLElement, Element, PageView> {
-  attachedItem: {
-    title: string;
-    description: string;
-    status: Category;
-    id: number;
-  };
-
-  constructor(
-    hostElementId: string,
-    view: PageView,
-    insertAtStart: boolean,
-    item: {
-      title: string;
-      description: string;
-      status: Category;
-      id: number;
-    }
-  ) {
+export abstract class DropZone extends Component<
+  HTMLElement,
+  Element,
+  PageView
+> {
+  constructor(hostElementId: string, view: PageView, insertAtStart: boolean) {
     super(hostElementId, view);
-    this.attachedItem = item;
     this.templateString = this.dropZoneHTML();
     this.element = this.createElement(this.templateString);
     this.attach(insertAtStart);
@@ -68,39 +52,10 @@ export class DropZone extends Component<HTMLElement, Element, PageView> {
     this.element.classList.add('drop-zone-active');
   }
 
-  private removeHighlight() {
+  protected removeHighlight() {
     this.element.classList.remove('drop-zone-active');
     this.element.classList.add('drop-zone-inactive');
   }
 
-  private dropHandler(e: DragEvent) {
-    const itemsContainerEle = (e.target as HTMLElement).closest(
-      '.items-container'
-    );
-    const dropZonesArr = Array.from(
-      (itemsContainerEle as HTMLElement).querySelectorAll('.drop-zone')
-    );
-    const itemsArr = Array.from(
-      (itemsContainerEle as HTMLElement).querySelectorAll(
-        '.item-card-container'
-      )
-    );
-    const droppedIndex = dropZonesArr.indexOf(e.target as HTMLElement);
-    const adjacentItemEle = itemsArr[droppedIndex];
-    const item = {
-      title: '',
-      description: '',
-      status: this.attachedItem.status,
-      id: -1
-    };
-    if (adjacentItemEle) {
-      item.id = +adjacentItemEle.id.split('-')[1];
-    }
-    (this.view as ProjectView).itemDropped(
-      item,
-      itemsContainerEle!,
-      adjacentItemEle
-    );
-    this.removeHighlight();
-  }
+  protected abstract dropHandler(e: DragEvent): void;
 }

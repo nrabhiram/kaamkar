@@ -3,13 +3,14 @@ import { ProjectsList } from '../model/projectsList';
 import { ProjectsListView } from '../view/projectsListView';
 import { Renderer } from '../renderer';
 import { Controller } from './controller';
+import { state } from '../app';
 
 export class ProjectsListController extends Controller {
   projects: ProjectsList;
 
-  constructor(projects: ProjectsList) {
+  constructor() {
     super();
-    this.projects = projects;
+    this.projects = state.projects;
   }
 
   add() {
@@ -35,7 +36,9 @@ export class ProjectsListController extends Controller {
     const project = parser.project(projectInput);
     const editedProjectTitle = parser.projectTitle(titleInput);
     const editedProjectDescription = parser.description(descriptionInput);
-    this.projects.edit(project, editedProjectTitle, editedProjectDescription);
+    if (project) {
+      this.projects.edit(project, editedProjectTitle, editedProjectDescription);
+    }
     this.write();
     view.edit();
   }
@@ -45,8 +48,24 @@ export class ProjectsListController extends Controller {
     const parser = new Parser();
     const projectInput = view.selectedProject();
     const project = parser.project(projectInput);
-    this.projects.delete(project);
+    if (project) {
+      this.projects.delete(project);
+    }
     this.write();
     view.delete();
+  }
+
+  arrange() {
+    const view = new ProjectsListView();
+    const parser = new Parser();
+    const selectedProjectInput = view.selectedProject();
+    const adjacentProjectInput = view.adjacentProject();
+    const selectedProject = parser.project(selectedProjectInput);
+    const adjacentProject = parser.project(adjacentProjectInput);
+    if (selectedProject) {
+      this.projects.arrange(selectedProject, adjacentProject);
+    }
+    this.write();
+    view.arrange();
   }
 }

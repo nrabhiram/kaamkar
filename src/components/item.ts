@@ -1,7 +1,7 @@
 import { Category } from '../model/status';
 import { ProjectView } from '../view/projectView';
 import { Component } from './component';
-import { DropZone } from './dropZone';
+import { ItemDropZone } from './itemDropZone';
 
 export class Item extends Component<HTMLElement, Element, ProjectView> {
   item: {
@@ -10,7 +10,7 @@ export class Item extends Component<HTMLElement, Element, ProjectView> {
     status: Category;
     id: number;
   };
-  dropZone: DropZone;
+  dropZone: ItemDropZone;
 
   constructor(
     hostElementId: string,
@@ -28,7 +28,7 @@ export class Item extends Component<HTMLElement, Element, ProjectView> {
     this.element = this.createElement(this.templateString);
     this.attach(false);
     this.configure();
-    this.dropZone = new DropZone(`item-${item.id}`, view, false, item);
+    this.dropZone = new ItemDropZone(`item-${item.id}`, view, false, item);
   }
 
   private itemHTML(item: {
@@ -56,7 +56,7 @@ export class Item extends Component<HTMLElement, Element, ProjectView> {
       truncatedHTML = '';
     }
     return `
-      <div class="item-card-container" draggable="true" id=item-${item.id}>
+      <div class="item-card-container" draggable="true" id="item-${item.id}">
         <div class="item-card draggable">
           <h5 class="item-title">${item.title}</h5>
           <p class="item-description truncated-item-description">
@@ -122,7 +122,7 @@ export class Item extends Component<HTMLElement, Element, ProjectView> {
       newContainerEle!.insertAdjacentElement('beforeend', editedElement);
     }
     this.item = item;
-    this.dropZone = new DropZone(`item-${item.id}`, this.view, false, item);
+    this.dropZone = new ItemDropZone(`item-${item.id}`, this.view, false, item);
     this.element = editedElement;
     this.configure();
   }
