@@ -21,7 +21,7 @@ export class EditProjectForm extends Modal {
             <div class="form-border modal-ease-out" id="edit-project-modal">
               <div class="form-content">
                 <h3 class="form-title">Edit your project</h3>
-                <form action="#" method="POST">
+                <form>
                   <div class="input-container">
                     <label for="first-name" class="form-label" id="edit-project-title-label">Project name</label>
                     <input type="text" name="first-name" class="form-input" id="edit-project-title-input">
@@ -32,8 +32,8 @@ export class EditProjectForm extends Modal {
                     <textarea name="about" rows="3" class="form-input" id="edit-project-description-input"></textarea>
                     <p class="form-input-description">Brief description of your project</p>
                   </div>
+                  <button type="submit" class="add-btn" id="edit-project-form-submit-btn">Edit Project</button>
                 </form>
-                <button type="submit" class="add-btn" id="edit-project-form-submit-btn">Edit Project</button>
               </div>
             </div>
           </div>
@@ -43,12 +43,14 @@ export class EditProjectForm extends Modal {
   }
 
   configure() {
-    const editBtn = this.element.querySelector('#edit-project-form-submit-btn');
+    const editBtn = this.element.querySelector(
+      '#edit-project-form-submit-btn'
+    ) as HTMLElement;
     (this.element as HTMLElement).addEventListener(
       'click',
       this.fadeOut.bind(this)
     );
-    editBtn?.addEventListener('click', this.onEditBtnClicked.bind(this));
+    editBtn.addEventListener('click', this.onEditBtnClicked.bind(this));
   }
 
   fadeIn(title: string, description: string) {
@@ -74,6 +76,7 @@ export class EditProjectForm extends Modal {
       '#edit-project-modal-overlay'
     );
     if (modalOverlay) {
+      (this.view as ProjectsListView).editProjectFormClosed();
       this.removeModal(
         'edit-project-modal',
         'edit-project-modal-background',

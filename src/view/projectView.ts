@@ -30,6 +30,9 @@ export class ProjectView extends PageView {
   private static adjacentItem: renderedItem;
   private static droppedContainerEle: Element;
   private static droppedContainerStatus: Category;
+  private static addItemFormOpen = false;
+  private static editItemFormOpen = false;
+  private static deleteItemModalOpen = false;
 
   constructor() {
     super();
@@ -130,28 +133,38 @@ export class ProjectView extends PageView {
   }
 
   addItemFormBtnClicked() {
-    const addItemForm = new AddItemForm(this);
-    addItemForm.fadeIn();
+    if (!ProjectView.addItemFormOpen) {
+      const addItemForm = new AddItemForm(this);
+      addItemForm.fadeIn();
+      ProjectView.addItemFormOpen = true;
+    }
   }
 
   editItemFormBtnClicked(component: ItemCard, item: renderedItem) {
-    ProjectView.selectedItemComponent = component;
-    ProjectView.selectedItem = item;
-    const editItemForm = new EditItemForm(this);
-    editItemForm.fadeIn(item.title, item.description, item.status);
+    if (!ProjectView.editItemFormOpen) {
+      ProjectView.selectedItemComponent = component;
+      ProjectView.selectedItem = item;
+      const editItemForm = new EditItemForm(this);
+      editItemForm.fadeIn(item.title, item.description, item.status);
+      ProjectView.editItemFormOpen = true;
+    }
   }
 
   deleteItemFormBtnClicked(component: ItemCard, item: renderedItem) {
-    ProjectView.selectedItemComponent = component;
-    ProjectView.selectedItem = item;
-    const deleteItemModal = new DeleteItemModal(this);
-    deleteItemModal.fadeIn();
+    if (!ProjectView.deleteItemModalOpen) {
+      ProjectView.selectedItemComponent = component;
+      ProjectView.selectedItem = item;
+      const deleteItemModal = new DeleteItemModal(this);
+      deleteItemModal.fadeIn();
+      ProjectView.deleteItemModalOpen = true;
+    }
   }
 
   addItemBtnClicked(title: string, description: string) {
     ProjectView.newTitle = title;
     ProjectView.newDescription = description;
     new ProjectController().add();
+    this.addItemFormClosed();
   }
 
   editItemBtnClicked(title: string, description: string, category: Category) {
@@ -159,10 +172,12 @@ export class ProjectView extends PageView {
     ProjectView.editedDescription = description;
     ProjectView.editedCategory = category;
     new ProjectController().edit();
+    this.editItemFormClosed();
   }
 
   deleteItemBtnClicked() {
     new ProjectController().delete();
+    this.deleteItemModalClosed();
   }
 
   itemDragged(component: ItemCard, item: renderedItem) {
@@ -180,5 +195,17 @@ export class ProjectView extends PageView {
     ProjectView.droppedContainerEle = droppedContainerEle;
     ProjectView.adjacentItemElement = adjacentItemEle;
     new ProjectController().arrange();
+  }
+
+  addItemFormClosed() {
+    ProjectView.addItemFormOpen = false;
+  }
+
+  editItemFormClosed() {
+    ProjectView.editItemFormOpen = false;
+  }
+
+  deleteItemModalClosed() {
+    ProjectView.deleteItemModalOpen = false;
   }
 }

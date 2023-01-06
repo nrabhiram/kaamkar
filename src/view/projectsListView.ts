@@ -28,6 +28,9 @@ export class ProjectsListView extends PageView {
   private static adjacentProjectElement: Element | undefined;
   private static adjacentProject: renderedProject;
   private static droppedContainerElement: Element;
+  private static addProjectFormOpen = false;
+  private static editProjectFormOpen = false;
+  private static deleteProjectModalOpen = false;
 
   constructor() {
     super();
@@ -106,41 +109,53 @@ export class ProjectsListView extends PageView {
   }
 
   addProjectFormBtnClicked() {
-    const addProjectForm = new AddProjectForm(this);
-    addProjectForm.fadeIn();
+    if (!ProjectsListView.addProjectFormOpen) {
+      const addProjectForm = new AddProjectForm(this);
+      addProjectForm.fadeIn();
+      ProjectsListView.addProjectFormOpen = true;
+    }
   }
 
   editProjectFormBtnClicked(component: ProjectCard, project: renderedProject) {
-    ProjectsListView.selectedProjectComponent = component;
-    ProjectsListView.selectedProject = project;
-    const editProjectForm = new EditProjectForm(this);
-    editProjectForm.fadeIn(project.title, project.description);
+    if (!ProjectsListView.editProjectFormOpen) {
+      ProjectsListView.selectedProjectComponent = component;
+      ProjectsListView.selectedProject = project;
+      const editProjectForm = new EditProjectForm(this);
+      editProjectForm.fadeIn(project.title, project.description);
+      ProjectsListView.editProjectFormOpen = true;
+    }
   }
 
   deleteProjectFormBtnClicked(
     component: ProjectCard,
     project: renderedProject
   ) {
-    ProjectsListView.selectedProjectComponent = component;
-    ProjectsListView.selectedProject = project;
-    const deleteProjectForm = new DeleteProjectModal(this);
-    deleteProjectForm.fadeIn();
+    if (!ProjectsListView.deleteProjectModalOpen) {
+      ProjectsListView.selectedProjectComponent = component;
+      ProjectsListView.selectedProject = project;
+      const deleteProjectForm = new DeleteProjectModal(this);
+      deleteProjectForm.fadeIn();
+      ProjectsListView.deleteProjectModalOpen = true;
+    }
   }
 
   addProjectBtnClicked(title: string, description: string) {
     ProjectsListView.newTitle = title;
     ProjectsListView.newDescription = description;
     new ProjectsListController().add();
+    this.addProjectFormClosed();
   }
 
   editProjectBtnClicked(title: string, description: string) {
     ProjectsListView.editedTitle = title;
     ProjectsListView.editedDescription = description;
     new ProjectsListController().edit();
+    this.editProjectFormClosed();
   }
 
   deleteProjectBtnClicked() {
     new ProjectsListController().delete();
+    this.deleteProjectModalClosed();
   }
 
   projectDragged(component: ProjectCard, project: renderedProject) {
@@ -157,5 +172,17 @@ export class ProjectsListView extends PageView {
     ProjectsListView.droppedContainerElement = droppedContainerEle;
     ProjectsListView.adjacentProjectElement = adjacentProjectEle;
     new ProjectsListController().arrange();
+  }
+
+  addProjectFormClosed() {
+    ProjectsListView.addProjectFormOpen = false;
+  }
+
+  editProjectFormClosed() {
+    ProjectsListView.editProjectFormOpen = false;
+  }
+
+  deleteProjectModalClosed() {
+    ProjectsListView.deleteProjectModalOpen = false;
   }
 }

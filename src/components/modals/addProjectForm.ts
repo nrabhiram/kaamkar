@@ -21,7 +21,7 @@ export class AddProjectForm extends Modal {
             <div class="form-border modal-ease-out" id="add-project-modal">
               <div class="form-content">
                 <h3 class="form-title">Create a new project</h3>
-                <form action="#" method="POST">
+                <form>
                   <div class="input-container">
                     <label for="first-name" class="form-label" id="add-project-title-label">Project name</label>
                     <input type="text" name="first-name" class="form-input" id="add-project-title-input">
@@ -32,8 +32,8 @@ export class AddProjectForm extends Modal {
                     <textarea name="about" rows="3" class="form-input" id="add-project-description-input"></textarea>
                     <p class="form-input-description">Brief description of your project</p>
                   </div>
+                  <button type="submit" class="add-btn" id="add-project-form-submit-btn">Create Project</button>
                 </form>
-                <button type="submit" class="add-btn" id="add-project-form-submit-btn">Create Project</button>
               </div>
             </div>
           </div>
@@ -43,12 +43,14 @@ export class AddProjectForm extends Modal {
   }
 
   configure() {
-    const addBtn = this.element.querySelector('#add-project-form-submit-btn');
+    const addBtn = this.element.querySelector(
+      '#add-project-form-submit-btn'
+    ) as HTMLElement;
     (this.element as HTMLElement).addEventListener(
       'click',
       this.fadeOut.bind(this)
     );
-    addBtn?.addEventListener('click', this.onSubmitBtnClicked.bind(this));
+    addBtn.addEventListener('click', this.onSubmitBtnClicked.bind(this));
   }
 
   fadeIn() {
@@ -64,6 +66,7 @@ export class AddProjectForm extends Modal {
       '#add-project-modal-overlay'
     );
     if (modalOverlay) {
+      (this.view as ProjectsListView).addProjectFormClosed();
       this.removeModal(
         'add-project-modal',
         'add-project-modal-background',

@@ -12,7 +12,7 @@ import { Project } from './model/project';
 export const state: {
   projects: ProjectsList;
   projectId: number;
-  project: Project | undefined
+  project: Project | undefined;
 } = {
   projects: Controller.read(),
   projectId: 0,
