@@ -43,12 +43,14 @@ export class EditProjectForm extends Modal {
   }
 
   configure() {
-    const editBtn = this.element.querySelector('#edit-project-form-submit-btn');
+    const editBtn = this.element.querySelector(
+      '#edit-project-form-submit-btn'
+    ) as HTMLElement;
     (this.element as HTMLElement).addEventListener(
       'click',
       this.fadeOut.bind(this)
     );
-    editBtn?.addEventListener('click', this.onEditBtnClicked.bind(this));
+    editBtn.addEventListener('click', this.onEditBtnClicked.bind(this));
   }
 
   fadeIn(title: string, description: string) {

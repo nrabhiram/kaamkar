@@ -23,7 +23,7 @@ export class EditItemForm extends Modal {
             <div class="form-border modal-ease-out" id="edit-item-modal">
               <div class="form-content">
                 <h3 class="form-title">Edit your project</h3>
-                <form action="#" method="POST">
+                <form>
                   <div class="input-container">
                     <label for="first-name" class="form-label" id="edit-item-title-label">Project name</label>
                     <input type="text" name="first-name" class="form-input" id="edit-item-title-input">
@@ -62,8 +62,8 @@ export class EditItemForm extends Modal {
                       </div>
                     </div>
                   </div>
+                  <button type="submit" class="add-btn" id="edit-item-form-submit-btn">Edit Item</button>
                 </form>
-                <button type="submit" class="add-btn" id="edit-item-form-submit-btn">Edit Item</button>
               </div>
             </div>
           </div>
@@ -85,7 +85,9 @@ export class EditItemForm extends Modal {
     const completeOption = this.element.querySelector(
       '#form-category-complete-option'
     );
-    const editBtn = this.element.querySelector('#edit-item-form-submit-btn');
+    const editBtn = this.element.querySelector(
+      '#edit-item-form-submit-btn'
+    ) as HTMLElement;
     (this.element as HTMLElement).addEventListener(
       'click',
       this.fadeOut.bind(this)
@@ -100,7 +102,7 @@ export class EditItemForm extends Modal {
     completeOption?.addEventListener('click', () =>
       this.updateMenuOption(Category.COMPLETED)
     );
-    editBtn?.addEventListener('click', this.onEditBtnClicked.bind(this));
+    editBtn.addEventListener('click', this.onEditBtnClicked.bind(this));
   }
 
   fadeIn(title: string, description: string, status: Category) {
@@ -131,6 +133,7 @@ export class EditItemForm extends Modal {
       '#edit-item-modal-overlay'
     );
     if (modalOverlay) {
+      (this.view as ProjectView).editItemFormClosed();
       this.removeModal(
         'edit-item-modal',
         'edit-item-modal-background',

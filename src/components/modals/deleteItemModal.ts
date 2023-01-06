@@ -72,6 +72,7 @@ export class DeleteItemModal extends Modal {
       '#delete-item-modal-overlay'
     );
     if (cancelBtn || modalOverlay) {
+      (this.view as ProjectView).deleteItemModalClosed();
       this.removeModal(
         'delete-item-modal',
         'delete-item-modal-background',
