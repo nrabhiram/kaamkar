@@ -1,3 +1,4 @@
+import { Router } from '../../router';
 import { PageView } from '../../view/pageView';
 import { Component } from '../component';
 
@@ -32,5 +33,13 @@ export class Hero extends Component<HTMLElement, Element, PageView> {
 		`;
   }
 
-  configure() {}
+  configure() {
+    const addProjectBtn = this.element.querySelector('.hero-add-btn') as HTMLElement;
+    addProjectBtn.addEventListener('click', this.onAddBtnClicked);
+  }
+
+  private onAddBtnClicked() {
+    history.pushState(null, '', 'projects');
+    new Router().route();
+  }
 }
