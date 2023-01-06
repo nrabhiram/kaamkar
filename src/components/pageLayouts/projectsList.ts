@@ -41,8 +41,10 @@ export class ProjectsList extends Component<
   }
 
   configure() {
-    const addBtn = this.element.querySelector('#add-project-btn');
-    addBtn?.addEventListener('click', this.onAddBtnClicked.bind(this));
+    const addBtn = this.element.querySelector(
+      '#add-project-btn'
+    ) as HTMLElement;
+    addBtn.addEventListener('click', this.onAddBtnClicked.bind(this));
   }
 
   private onAddBtnClicked() {

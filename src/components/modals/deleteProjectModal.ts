@@ -71,6 +71,7 @@ export class DeleteProjectModal extends Modal {
     const modalOverlay = (e.target as HTMLElement).matches(
       '#delete-project-modal-overlay'
     );
+    (this.view as ProjectsListView).deleteProjectModalClosed();
     if (cancelBtn || modalOverlay) {
       this.removeModal(
         'delete-project-modal',

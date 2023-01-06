@@ -34,7 +34,9 @@ export class Hero extends Component<HTMLElement, Element, PageView> {
   }
 
   configure() {
-    const addProjectBtn = this.element.querySelector('.hero-add-btn') as HTMLElement;
+    const addProjectBtn = this.element.querySelector(
+      '.hero-add-btn'
+    ) as HTMLElement;
     addProjectBtn.addEventListener('click', this.onAddBtnClicked);
   }
 
