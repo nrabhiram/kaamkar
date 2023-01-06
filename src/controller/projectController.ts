@@ -14,7 +14,7 @@ export class ProjectController extends Controller {
     super();
     this.id = state.projectId;
     if (this.id !== -1) {
-      this.project = state.project();
+      this.project = state.project;
     }
   }
 
