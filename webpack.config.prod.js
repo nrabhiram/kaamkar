@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
 	mode: 'production',
@@ -7,7 +8,7 @@ module.exports = {
 	output: {
 		filename: 'bundle.js',
 		path: path.resolve(__dirname, 'dist'),
-		publicPath: '/dist/',
+		publicPath: '/',
 		assetModuleFilename: 'assets/[name][ext]',
 		clean: true,
 	},
@@ -33,9 +34,12 @@ module.exports = {
 		extensions: ['.ts', '.js']
 	},
 	plugins: [
+		new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebpackPlugin({
 			filename: 'index.html',
-			template: 'src/index.html'
+			template: 'src/index.html',
+			favicon: 'src/assets/favicon-32x32.png'
+
 		}),
 	]
 };

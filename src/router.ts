@@ -69,6 +69,7 @@ export class Router {
           }
           state.projectId = +projectId;
           if (project) {
+            state.project = project;
             const projectView = new ProjectView();
             const renderedToDoItems = renderer.items(project.toDoItems());
             const renderedProgressItems = renderer.items(
@@ -85,6 +86,7 @@ export class Router {
               renderedCompleteItems
             );
           } else {
+            state.project = undefined;
             new NotFoundView().render();
           }
         }

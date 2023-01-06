@@ -6,17 +6,17 @@ import './assets/favicon-16x16.png';
 import './assets/favicon-32x32.png';
 import './assets/site.webmanifest';
 import './assets/twitter-card.png';
+import { ProjectsList } from './model/projectsList';
+import { Project } from './model/project';
 
-export const state = {
+export const state: {
+  projects: ProjectsList;
+  projectId: number;
+  project: Project | undefined
+} = {
   projects: Controller.read(),
   projectId: 0,
-  project: function () {
-    for (let i = 0; i < this.projects.projects.length; i++) {
-      if (this.projectId === this.projects.projects[i].id) {
-        return this.projects.projects[i];
-      }
-    }
-  }
+  project: undefined
 };
 
 new Router().route();
