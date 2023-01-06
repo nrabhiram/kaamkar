@@ -1,5 +1,5 @@
-import { PageView } from '../view/pageView';
-import { Component } from './component';
+import { PageView } from '../../view/pageView';
+import { Component } from '../component';
 
 export class Mesh extends Component<HTMLElement, Element, PageView> {
   constructor(view: PageView) {
@@ -10,7 +10,7 @@ export class Mesh extends Component<HTMLElement, Element, PageView> {
     this.configure();
   }
 
-  meshHTML() {
+  private meshHTML() {
     return `
       <div class="mesh-gradient-container">
         <div class="mesh-1"></div>

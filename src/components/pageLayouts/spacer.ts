@@ -1,5 +1,5 @@
-import { PageView } from '../view/pageView';
-import { Component } from './component';
+import { PageView } from '../../view/pageView';
+import { Component } from '../component';
 
 export class Spacer extends Component<HTMLElement, Element, PageView> {
   constructor(view: PageView) {
@@ -10,7 +10,7 @@ export class Spacer extends Component<HTMLElement, Element, PageView> {
     this.configure();
   }
 
-  spacerHTML() {
+  private spacerHTML() {
     return `
       <div class="grow"></div>
     `;

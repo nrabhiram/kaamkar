@@ -1,5 +1,5 @@
-import { PageView } from '../view/pageView';
-import { Component } from './component';
+import { PageView } from '../../view/pageView';
+import { Component } from '../component';
 
 export abstract class Modal extends Component<HTMLElement, Element, PageView> {
   constructor(view: PageView) {

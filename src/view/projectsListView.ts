@@ -1,12 +1,12 @@
-import { AddProjectForm } from '../components/addProjectForm';
-import { DeleteProjectModal } from '../components/deleteProjectModal';
-import { EditProjectForm } from '../components/editProjectForm';
-import { Footer } from '../components/footer';
-import { Mesh } from '../components/mesh';
-import { NavBar } from '../components/navBar';
-import { ProjectCard } from '../components/projectCard';
-import { ProjectsList } from '../components/projectsList';
-import { Spacer } from '../components/spacer';
+import { AddProjectForm } from '../components/modals/addProjectForm';
+import { DeleteProjectModal } from '../components/modals/deleteProjectModal';
+import { EditProjectForm } from '../components/modals/editProjectForm';
+import { Footer } from '../components/pageLayouts/footer';
+import { Mesh } from '../components/pageLayouts/mesh';
+import { NavBar } from '../components/pageLayouts/navBar';
+import { ProjectCard } from '../components/cards/projectCard';
+import { ProjectsList } from '../components/pageLayouts/projectsList';
+import { Spacer } from '../components/pageLayouts/spacer';
 import { ProjectsListController } from '../controller/projectsListController';
 import { PageView } from './pageView';
 
@@ -42,8 +42,7 @@ export class ProjectsListView extends PageView {
       id: number;
     }[]
   ) {
-    const app = document.getElementById('app');
-    app!.innerHTML = '';
+    this.clear();
     new Mesh(this);
     new NavBar(this);
     new ProjectsList(this);

@@ -1,4 +1,4 @@
-import { ProjectView } from '../view/projectView';
+import { ProjectView } from '../../view/projectView';
 import { Modal } from './modal';
 
 export class AddItemForm extends Modal {

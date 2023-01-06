@@ -1,4 +1,4 @@
-import { ProjectsListView } from '../view/projectsListView';
+import { ProjectsListView } from '../../view/projectsListView';
 import { Modal } from './modal';
 
 export class DeleteProjectModal extends Modal {

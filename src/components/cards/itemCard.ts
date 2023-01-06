@@ -1,9 +1,9 @@
-import { Category } from '../model/status';
-import { ProjectView } from '../view/projectView';
-import { Component } from './component';
-import { ItemDropZone } from './itemDropZone';
+import { Category } from '../../model/status';
+import { ProjectView } from '../../view/projectView';
+import { Component } from '../component';
+import { ItemDropZone } from '../dropZones/itemDropZone';
 
-export class Item extends Component<HTMLElement, Element, ProjectView> {
+export class ItemCard extends Component<HTMLElement, Element, ProjectView> {
   item: {
     title: string;
     description: string;
@@ -118,8 +118,10 @@ export class Item extends Component<HTMLElement, Element, ProjectView> {
     } else {
       this.element.remove();
       const newContainerId = this.getContainerId(item.status);
-      const newContainerEle = document.getElementById(newContainerId);
-      newContainerEle!.insertAdjacentElement('beforeend', editedElement);
+      const newContainerEle = document.getElementById(
+        newContainerId
+      ) as HTMLElement;
+      newContainerEle.insertAdjacentElement('beforeend', editedElement);
     }
     this.item = item;
     this.dropZone = new ItemDropZone(`item-${item.id}`, this.view, false, item);
@@ -147,21 +149,21 @@ export class Item extends Component<HTMLElement, Element, ProjectView> {
   private toggleDescription(e: MouseEvent) {
     const itemElement = (e.target as HTMLElement).closest(
       '.item-card-container'
-    );
-    const truncatedDescription = itemElement!.querySelector(
+    ) as Element;
+    const truncatedDescription = itemElement.querySelector(
       '.truncated-item-description'
-    );
-    const fullDescription = itemElement!.querySelector(
+    ) as Element;
+    const fullDescription = itemElement.querySelector(
       '.full-item-description'
-    );
-    const descriptionButton = itemElement!.querySelector('.read-btn');
-    if (fullDescription!.classList.contains('collapsible')) {
-      truncatedDescription!.classList.toggle('collapsible');
-      fullDescription!.classList.toggle('collapsible');
-      fullDescription!.classList.toggle('active');
+    ) as Element;
+    const descriptionButton = itemElement.querySelector('.read-btn') as Element;
+    if (fullDescription.classList.contains('collapsible')) {
+      truncatedDescription.classList.toggle('collapsible');
+      fullDescription.classList.toggle('collapsible');
+      fullDescription.classList.toggle('active');
       (fullDescription as HTMLElement).style.maxHeight =
-        fullDescription!.scrollHeight + 'px';
-      descriptionButton!.innerHTML = `
+        fullDescription.scrollHeight + 'px';
+      descriptionButton.innerHTML = `
         <svg class="read-btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
         </svg>
@@ -169,16 +171,16 @@ export class Item extends Component<HTMLElement, Element, ProjectView> {
       `;
     } else {
       (fullDescription as HTMLElement).style.maxHeight = '0px';
-      descriptionButton!.innerHTML = `
+      descriptionButton.innerHTML = `
         <svg class="read-btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
         </svg>
         <span class="read-btn-text">Read more</span>
       `;
       setTimeout(() => {
-        truncatedDescription!.classList.toggle('collapsible');
-        fullDescription!.classList.toggle('active');
-        fullDescription!.classList.toggle('collapsible');
+        truncatedDescription.classList.toggle('collapsible');
+        fullDescription.classList.toggle('active');
+        fullDescription.classList.toggle('collapsible');
       }, 200);
     }
   }
@@ -202,8 +204,11 @@ export class Item extends Component<HTMLElement, Element, ProjectView> {
   }
 
   private itemDragStart(e: DragEvent) {
-    e.dataTransfer!.setData('text/plain', (e.target as HTMLElement).id);
-    e.dataTransfer!.effectAllowed = 'move';
+    (e.dataTransfer as DataTransfer).setData(
+      'text/plain',
+      (e.target as HTMLElement).id
+    );
+    (e.dataTransfer as DataTransfer).effectAllowed = 'move';
     const itemCardEle = this.element.querySelector('.item-card');
     itemCardEle?.classList.add('dragging');
     (this.view as ProjectView).itemDragged(this, this.item);

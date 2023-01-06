@@ -1,7 +1,7 @@
-import { Category } from '../model/status';
-import { ProjectView } from '../view/projectView';
-import { Component } from './component';
-import { ItemDropZone } from './itemDropZone';
+import { Category } from '../../model/status';
+import { ProjectView } from '../../view/projectView';
+import { Component } from '../component';
+import { ItemDropZone } from '../dropZones/itemDropZone';
 
 export class Project extends Component<HTMLElement, Element, ProjectView> {
   title: string;
@@ -33,7 +33,7 @@ export class Project extends Component<HTMLElement, Element, ProjectView> {
     });
   }
 
-  projectHTML(title: string) {
+  private projectHTML(title: string) {
     return `
       <div class="app-body">
         <div class="app-head">
