@@ -13,7 +13,7 @@ export class NotFound extends Component<HTMLElement, Element, PageView> {
   private notFoundHTML() {
     return `
       <div class="hero">
-        <h1 class="hero-title text-center">
+        <h1 class="hero-title">
           <span class="block">Oops...</span>
         </h1>
         <p class="hero-description">

@@ -11,7 +11,7 @@ export abstract class Component<
   templateString = '';
 
   constructor(hostElementId: string, view: PageView) {
-    this.hostElement = document.getElementById(hostElementId)! as T;
+    this.hostElement = document.getElementById(hostElementId) as T;
     this.view = view as V;
     this.element = this.createElement('<div></div>');
   }

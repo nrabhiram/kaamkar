@@ -42,8 +42,7 @@ export class ProjectsListView extends PageView {
       id: number;
     }[]
   ) {
-    const app = document.getElementById('app');
-    app!.innerHTML = '';
+    this.clear();
     new Mesh(this);
     new NavBar(this);
     new ProjectsList(this);

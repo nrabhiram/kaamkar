@@ -7,7 +7,9 @@ module.exports = {
 	output: {
 		filename: 'bundle.js',
 		path: path.resolve(__dirname, 'dist'),
-    	publicPath: '/dist/'
+    	publicPath: '/dist/',
+		assetModuleFilename: 'assets/[name][ext]',
+		clean: true,
 	},
 	devServer: {
 		static: {
@@ -31,6 +33,10 @@ module.exports = {
 				test: /\.css$/i,
 				include: path.resolve(__dirname, 'src'),
 				use: ['style-loader', 'css-loader', 'postcss-loader']
+			},
+			{
+				test: /\.(png|svg|jpg|jpeg|gif|webmanifest)$/,
+				type: 'asset/resource'
 			},
 		]
 	},

@@ -54,8 +54,7 @@ export class ProjectView extends PageView {
     progressItems: renderedItem[],
     completeItems: renderedItem[]
   ) {
-    const app = document.getElementById('app');
-    app!.innerHTML = '';
+    this.clear();
     new Mesh(this);
     new NavBar(this);
     new Project(title, this);

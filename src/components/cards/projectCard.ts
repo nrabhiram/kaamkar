@@ -158,21 +158,23 @@ export class ProjectCard extends Component<
   private toggleDescription(e: MouseEvent) {
     const projectElement = (e.target as HTMLElement).closest(
       '.project-card-container'
-    );
-    const truncatedDescription = projectElement!.querySelector(
+    ) as Element;
+    const truncatedDescription = projectElement.querySelector(
       '.truncated-project-description'
-    );
-    const fullDescription = projectElement!.querySelector(
+    ) as Element;
+    const fullDescription = projectElement.querySelector(
       '.full-project-description'
-    );
-    const descriptionButton = projectElement!.querySelector('.read-btn');
-    if (fullDescription!.classList.contains('collapsible')) {
-      truncatedDescription!.classList.toggle('collapsible');
-      fullDescription!.classList.toggle('collapsible');
-      fullDescription!.classList.toggle('active');
+    ) as Element;
+    const descriptionButton = projectElement.querySelector(
+      '.read-btn'
+    ) as Element;
+    if (fullDescription.classList.contains('collapsible')) {
+      truncatedDescription.classList.toggle('collapsible');
+      fullDescription.classList.toggle('collapsible');
+      fullDescription.classList.toggle('active');
       (fullDescription as HTMLElement).style.maxHeight =
-        fullDescription!.scrollHeight + 'px';
-      descriptionButton!.innerHTML = `
+        fullDescription.scrollHeight + 'px';
+      descriptionButton.innerHTML = `
         <svg class="read-btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
         </svg>
@@ -180,16 +182,16 @@ export class ProjectCard extends Component<
       `;
     } else {
       (fullDescription as HTMLElement).style.maxHeight = '0px';
-      descriptionButton!.innerHTML = `
+      descriptionButton.innerHTML = `
         <svg class="read-btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
         </svg>
         <span class="read-btn-text">Read more</span>
       `;
       setTimeout(() => {
-        truncatedDescription!.classList.toggle('collapsible');
-        fullDescription!.classList.toggle('active');
-        fullDescription!.classList.toggle('collapsible');
+        truncatedDescription.classList.toggle('collapsible');
+        fullDescription.classList.toggle('active');
+        fullDescription.classList.toggle('collapsible');
       }, 200);
     }
   }
@@ -213,8 +215,11 @@ export class ProjectCard extends Component<
   }
 
   private projectDragStart(e: DragEvent) {
-    e.dataTransfer!.setData('text/plain', (e.target as HTMLElement).id);
-    e.dataTransfer!.effectAllowed = 'move';
+    (e.dataTransfer as DataTransfer).setData(
+      'text/plain',
+      (e.target as HTMLElement).id
+    );
+    (e.dataTransfer as DataTransfer).effectAllowed = 'move';
     const projectCardEle = this.element.querySelector('.project-card');
     projectCardEle?.classList.add('dragging');
     this.view.projectDragged(this, this.project);
@@ -237,8 +242,8 @@ export class ProjectCard extends Component<
       e.preventDefault();
       const cardEle = (e.target as HTMLElement).closest(
         '.project-card-container'
-      );
-      const id = cardEle!.id.split('-')[1];
+      ) as Element;
+      const id = cardEle.id.split('-')[1];
       history.pushState(null, '', `projects/${id}`);
       new Router().route();
     }

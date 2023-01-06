@@ -13,7 +13,7 @@ export class Hero extends Component<HTMLElement, Element, PageView> {
   private heroHTML() {
     return `
 			<div class="hero">
-				<h1 class="hero-title text-center">
+				<h1 class="hero-title">
 					<span class="block">Stay on top of </span>
 					<span class="block">the important stuff</span>
 				</h1>

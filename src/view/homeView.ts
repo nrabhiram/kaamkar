@@ -10,8 +10,7 @@ export class HomeView extends PageView {
   }
 
   render() {
-    const app = document.getElementById('app');
-    app!.innerHTML = '';
+    this.clear();
     new Mesh(this);
     new NavBar(this);
     new Hero(this);

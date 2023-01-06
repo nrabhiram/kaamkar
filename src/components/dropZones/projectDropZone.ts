@@ -23,7 +23,7 @@ export class ProjectDropZone extends DropZone {
         '.project-card-container'
       )
     );
-    const projectId = e.dataTransfer!.getData('text/plain');
+    const projectId = (e.dataTransfer as DataTransfer).getData('text/plain');
     const project = this.getProject(
       dropZonesArr,
       projectsArr,
@@ -37,7 +37,7 @@ export class ProjectDropZone extends DropZone {
     );
     (this.view as ProjectsListView).projectDropped(
       project,
-      projectsContainerEle!,
+      projectsContainerEle as Element,
       adjacentProjectEle
     );
     this.removeHighlight();
@@ -49,8 +49,8 @@ export class ProjectDropZone extends DropZone {
     dropZone: Element,
     projectId: string
   ) {
-    const projectEle = document.getElementById(projectId);
-    const projectDropZone1 = projectEle!.lastElementChild as Element;
+    const projectEle = document.getElementById(projectId) as HTMLElement;
+    const projectDropZone1 = projectEle.lastElementChild as Element;
     const projectContainerEle = projectDropZone1.closest('.project-container');
     const projectContainerDropZonesArr = Array.from(
       (projectContainerEle as HTMLElement).querySelectorAll('.drop-zone')
@@ -77,7 +77,7 @@ export class ProjectDropZone extends DropZone {
       id: -1
     };
     if (dropZone === projectDropZone1 || dropZone === projectDropZone2) {
-      project.id = +projectEle!.id.split('-')[1];
+      project.id = +projectEle.id.split('-')[1];
     } else if (adjacentProjectEle) {
       project.id = +adjacentProjectEle.id.split('-')[1];
     }

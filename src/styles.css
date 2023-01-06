@@ -64,7 +64,15 @@
 }
 
 .nav-sub-container {
-    @apply w-full block flex-grow lg:flex lg:items-center lg:w-auto;
+    @apply w-full hidden flex-grow lg:flex lg:items-center lg:w-auto sm:block;
+}
+
+.sub-nav-collapsed {
+    @apply hidden;
+}
+
+.sub-nav-open {
+    @apply w-full block flex-grow lg:items-center lg:w-auto sm:hidden;
 }
 
 .nav-links-container {
@@ -176,7 +184,7 @@
 }
 
 .hero-title {
-    @apply lg:text-6xl sm:text-4xl text-2xl text-light-100 font-bold;
+    @apply lg:text-6xl sm:text-4xl text-2xl text-light-100 font-bold text-center;
 }
 
 .hero-description {
@@ -484,4 +492,10 @@
 
 .project-option-spacing {
     @apply mr-2;
+}
+
+.mobile-nav {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
 }
