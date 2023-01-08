@@ -23,13 +23,13 @@ export class AddProjectForm extends Modal {
                 <h3 class="form-title">Create a new project</h3>
                 <form>
                   <div class="input-container">
-                    <label for="first-name" class="form-label" id="add-project-title-label">Project name</label>
-                    <input type="text" name="first-name" class="form-input" id="add-project-title-input">
+                    <label class="form-label" id="add-project-title-label">Project name</label>
+                    <input type="text" class="form-input" id="add-project-title-input">
                     <p class="form-input-description">Name of your project</p>
                   </div>
                   <div class="input-container">
-                    <label for="about" class="form-label">Project description</label>
-                    <textarea name="about" rows="3" class="form-input" id="add-project-description-input"></textarea>
+                    <label class="form-label">Project description</label>
+                    <textarea rows="3" class="form-input" id="add-project-description-input"></textarea>
                     <p class="form-input-description">Brief description of your project</p>
                   </div>
                   <button type="submit" class="add-btn" id="add-project-form-submit-btn">Create Project</button>
@@ -43,14 +43,12 @@ export class AddProjectForm extends Modal {
   }
 
   configure() {
-    const addBtn = this.element.querySelector(
-      '#add-project-form-submit-btn'
-    ) as HTMLElement;
+    const addProjectForm = this.element.querySelector('form') as HTMLElement;
     (this.element as HTMLElement).addEventListener(
       'click',
       this.fadeOut.bind(this)
     );
-    addBtn.addEventListener('click', this.onSubmitBtnClicked.bind(this));
+    addProjectForm.addEventListener('submit', this.onSubmit.bind(this));
   }
 
   fadeIn() {
@@ -75,7 +73,8 @@ export class AddProjectForm extends Modal {
     }
   }
 
-  private onSubmitBtnClicked() {
+  private onSubmit(e: SubmitEvent) {
+    e.preventDefault();
     const projectTitle = (
       document.getElementById('add-project-title-input') as HTMLInputElement
     ).value;
