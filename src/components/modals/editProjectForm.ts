@@ -23,13 +23,13 @@ export class EditProjectForm extends Modal {
                 <h3 class="form-title">Edit your project</h3>
                 <form>
                   <div class="input-container">
-                    <label for="first-name" class="form-label" id="edit-project-title-label">Project name</label>
-                    <input type="text" name="first-name" class="form-input" id="edit-project-title-input">
+                    <label class="form-label" id="edit-project-title-label">Project name</label>
+                    <input type="text" class="form-input" id="edit-project-title-input">
                     <p class="form-input-description">Name of your project</p>
                   </div>
                   <div class="input-container">
-                    <label for="about" class="form-label">Project description</label>
-                    <textarea name="about" rows="3" class="form-input" id="edit-project-description-input"></textarea>
+                    <label class="form-label">Project description</label>
+                    <textarea rows="3" class="form-input" id="edit-project-description-input"></textarea>
                     <p class="form-input-description">Brief description of your project</p>
                   </div>
                   <button type="submit" class="add-btn" id="edit-project-form-submit-btn">Edit Project</button>
@@ -43,14 +43,12 @@ export class EditProjectForm extends Modal {
   }
 
   configure() {
-    const editBtn = this.element.querySelector(
-      '#edit-project-form-submit-btn'
-    ) as HTMLElement;
+    const editProjectForm = this.element.querySelector('form') as HTMLElement;
     (this.element as HTMLElement).addEventListener(
       'click',
       this.fadeOut.bind(this)
     );
-    editBtn.addEventListener('click', this.onEditBtnClicked.bind(this));
+    editProjectForm.addEventListener('submit', this.onEdit.bind(this));
   }
 
   fadeIn(title: string, description: string) {
@@ -85,7 +83,8 @@ export class EditProjectForm extends Modal {
     }
   }
 
-  private onEditBtnClicked() {
+  private onEdit(e: SubmitEvent) {
+    e.preventDefault();
     const projectTitle = (
       document.getElementById('edit-project-title-input') as HTMLInputElement
     ).value;
